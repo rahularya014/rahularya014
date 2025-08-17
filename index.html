@@ -38,11 +38,22 @@
             -moz-osx-font-smoothing: grayscale;
             overflow-x: hidden;
         }
+        
+        #particle-canvas {
+            position: fixed; /* Changed to fixed */
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1; /* Pushed to the very back */
+        }
 
         .container {
             max-width: 1100px;
             margin: 0 auto;
             padding: 0 2rem;
+            position: relative; /* Ensure content is above canvas */
+            z-index: 2;
         }
 
         /* --- Hero Section --- */
@@ -54,15 +65,6 @@
             justify-content: center;
             text-align: center;
             overflow: hidden;
-        }
-
-        #particle-canvas {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 1;
         }
 
         .hero-content {
@@ -207,6 +209,8 @@
         .section {
             padding: 6rem 0;
             border-bottom: 1px solid var(--border-color);
+            background: rgba(10, 10, 10, 0.5); /* Semi-transparent background for sections */
+            backdrop-filter: blur(2px);
         }
         
         .section-title {
@@ -607,10 +611,9 @@
     </style>
 </head>
 <body>
-
+    <canvas id="particle-canvas"></canvas>
     <!-- HERO SECTION -->
     <header class="hero">
-        <canvas id="particle-canvas"></canvas>
         <div class="hero-content">
             <h1>Rahul Arya</h1>
             <p class="subtitle"><span id="typing-text"></span><span class="typing-cursor"></span></p>
@@ -618,7 +621,15 @@
                 <a href="mailto:rahularyajii2002@gmail.com" title="Email" target="_blank">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
                 </a>
-                <!-- Add links to LinkedIn, GitHub etc. if available -->
+                <a href="https://www.linkedin.com/in/rahul-arya" title="LinkedIn" target="_blank">
+                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+                </a>
+                 <a href="https://github.com/rahularya014" title="GitHub" target="_blank">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+                </a>
+                 <a href="https://www.instagram.com/rahularya014" title="Instagram" target="_blank">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                </a>
             </div>
             <a href="#projects" class="cta-button">View My Work</a>
         </div>
@@ -632,7 +643,7 @@
         <section id="about" class="section container">
             <h2 class="section-title reveal">About Me</h2>
             <p class="reveal">
-                A driven and analytical Economics postgraduate from the Delhi School of Economics with a passion for applying machine learning to solve complex financial challenges. My experience spans credit risk modeling, product management, and data-driven analytics, with a proven track record of developing robust predictive models and enhancing user engagement. I thrive on transforming raw data into actionable insights and building solutions that create tangible business impact.
+               Turning economic intuition into data-driven solutions. I am an ML & AI Enthusiast, Data Analyst, and Researcher, blending economics with advanced analytics to guide better decisions.
             </p>
         </section>
 
@@ -795,6 +806,15 @@
             <div class="social-links">
                  <a href="mailto:rahularyajii2002@gmail.com" title="Email" target="_blank">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                </a>
+                 <a href="https://www.linkedin.com/in/rahul-arya" title="LinkedIn" target="_blank">
+                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+                </a>
+                 <a href="https://github.com/rahularya014" title="GitHub" target="_blank">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+                </a>
+                 <a href="https://www.instagram.com/rahularya014" title="Instagram" target="_blank">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
                 </a>
             </div>
             <p>&copy; 2024 Rahul Arya. Designed with passion.</p>
