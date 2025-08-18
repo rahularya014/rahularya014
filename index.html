@@ -12,8 +12,8 @@
             --bg-color: #0a0a0a;
             --primary-color: #1a1a1a;
             --secondary-color: #2a2a2a;
-            --accent-color: #00aaff;
-            --accent-glow: rgba(0, 170, 255, 0.5);
+            --accent-color: #00f0ff; /* Brighter Cyan */
+            --accent-glow: rgba(0, 240, 255, 0.6); /* Brighter Glow */
             --text-primary: #e0e0e0;
             --text-secondary: #a0a0a0;
             --border-color: rgba(255, 255, 255, 0.1);
@@ -144,7 +144,7 @@
 
         .cta-button {
             background: var(--accent-color);
-            color: #fff;
+            color: #000; /* Changed for better contrast */
             padding: 12px 24px;
             border-radius: 8px;
             text-decoration: none;
@@ -313,7 +313,7 @@
         }
         
         .timeline-item:hover .timeline-content {
-            box-shadow: 0 0 20px rgba(0, 170, 255, 0.1);
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.1);
         }
         
         .timeline-content h3 {
@@ -385,7 +385,7 @@
             border-radius: 10px;
             background: radial-gradient(
                 800px circle at var(--mouse-x, 0) var(--mouse-y, 0),
-                rgba(0, 170, 255, 0.15),
+                rgba(0, 240, 255, 0.2),
                 transparent 40%
             );
             opacity: 0;
@@ -430,7 +430,7 @@
 
         .ai-summarize-btn:hover {
             background: var(--accent-color);
-            color: #fff;
+            color: #000;
         }
 
         /* --- Skills Section --- */
@@ -470,7 +470,7 @@
         }
         .skill-item:hover {
             background: var(--accent-color);
-            color: #fff;
+            color: #000;
             transform: translateY(-2px);
         }
         
@@ -871,7 +871,7 @@ document.addEventListener('DOMContentLoaded', function() {
         draw() {
             ctx.beginPath();
             ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false);
-            ctx.fillStyle = 'rgba(0, 170, 255, 0.1)';
+            ctx.fillStyle = 'rgba(0, 240, 255, 0.2)';
             ctx.fill();
         }
 
@@ -908,7 +908,7 @@ document.addEventListener('DOMContentLoaded', function() {
             let y = (Math.random() * ((innerHeight - size * 2) - (size * 2)) + size * 2);
             let directionX = (Math.random() * 0.4) - 0.2;
             let directionY = (Math.random() * 0.4) - 0.2;
-            let color = 'rgba(0, 170, 255, 0.1)';
+            let color = 'rgba(0, 240, 255, 0.2)';
             particlesArray.push(new Particle(x, y, directionX, directionY, size, color));
         }
     }
@@ -921,7 +921,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     ((particlesArray[a].y - particlesArray[b].y) * (particlesArray[a].y - particlesArray[b].y));
                 if (distance < (canvas.width / 7) * (canvas.height / 7)) {
                     opacityValue = 1 - (distance / 20000);
-                    ctx.strokeStyle = `rgba(0, 170, 255, ${opacityValue * 0.1})`;
+                    ctx.strokeStyle = `rgba(0, 240, 255, ${opacityValue * 0.15})`;
                     ctx.lineWidth = 1;
                     ctx.beginPath();
                     ctx.moveTo(particlesArray[a].x, particlesArray[a].y);
