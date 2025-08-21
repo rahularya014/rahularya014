@@ -411,8 +411,22 @@
             color: var(--text-secondary);
             font-size: 0.9rem;
         }
+        
+        .project-card a {
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        .project-card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1rem;
+            position: relative;
+            z-index: 2;
+        }
 
-        .ai-summarize-btn {
+        .ai-summarize-btn, .view-project-btn {
             background: none;
             border: 1px solid var(--accent-color);
             color: var(--accent-color);
@@ -421,14 +435,11 @@
             cursor: pointer;
             font-family: 'Roboto Mono', monospace;
             font-size: 0.8rem;
-            margin-top: 1rem;
-            align-self: flex-start;
             transition: background 0.3s, color 0.3s;
-            position: relative;
-            z-index: 2;
+            text-decoration: none;
         }
 
-        .ai-summarize-btn:hover {
+        .ai-summarize-btn:hover, .view-project-btn:hover {
             background: var(--accent-color);
             color: #000;
         }
@@ -687,42 +698,56 @@
                         <h3>Farmer Income Prediction Model</h3>
                         <p>Developed an L&T Finance model integrating diverse data to predict farmer income. Engineered features, tuned an XGBoost+LightGBM+Ridge ensemble, and deployed a REST API to enable data-driven credit decisions.</p>
                     </div>
-                    <button class="ai-summarize-btn">✨ Summarize with AI</button>
+                    <div class="project-card-footer">
+                        <button class="ai-summarize-btn">Summarize with AI</button>
+                        <a href="https://rahularya014.github.io/Farmer-income-Demo/" target="_blank" rel="noopener noreferrer" class="view-project-btn">Preview</a>
+                    </div>
                 </div>
                 <div class="project-card reveal">
                     <div class="project-card-content">
                         <h3>AMEX Customer Engagement Model</h3>
                         <p>Created a scalable Dask pipeline to personalize offers for 370K+ users. Built an XGB+LGBM+CatBoost ensemble with custom features like Click Momentum, boosting performance by 15%.</p>
                     </div>
-                    <button class="ai-summarize-btn">✨ Summarize with AI</button>
+                     <div class="project-card-footer">
+                        <button class="ai-summarize-btn">Summarize with AI</button>
+                        <a href="https://rahularya014.github.io/Predictive-Modeling-for-Customer-Engagement-with-Offers-using-AMEX-Data-/" target="_blank" rel="noopener noreferrer" class="view-project-btn">Preview</a>
+                    </div>
                 </div>
                 <div class="project-card reveal">
                      <div class="project-card-content">
                         <h3>AI-Powered Supply Chain Analytics</h3>
                         <p>Automated a full ETL pipeline using N8N. Leveraged Quadratic AI for prompt-based KPI computation, auto-generating SQL logic and visual insights to accelerate decision-making.</p>
                     </div>
-                    <button class="ai-summarize-btn">✨ Summarize with AI</button>
+                    <div class="project-card-footer">
+                        <button class="ai-summarize-btn">Summarize with AI</button>
+                    </div>
                 </div>
                 <div class="project-card reveal">
                     <div class="project-card-content">
                         <h3>Credit Card Fraud Detection</h3>
                         <p>Designed a Keras autoencoder on 227K+ transactions, achieving a ROC-AUC of 0.95 for anomaly detection. Also built a Sklearn pipeline with 93.4% test accuracy.</p>
                     </div>
-                    <button class="ai-summarize-btn">✨ Summarize with AI</button>
+                    <div class="project-card-footer">
+                        <button class="ai-summarize-btn">Summarize with AI</button>
+                    </div>
                 </div>
                 <div class="project-card reveal">
                     <div class="project-card-content">
                         <h3>Causes of Death in India (1950-2019)</h3>
                         <p>Analyzed 30 years of data using OLS linear regression to study the impact of various health and social factors on death rates, achieving a high R² of 0.8959.</p>
                     </div>
-                    <button class="ai-summarize-btn">✨ Summarize with AI</button>
+                    <div class="project-card-footer">
+                        <button class="ai-summarize-btn">Summarize with AI</button>
+                    </div>
                 </div>
                 <div class="project-card reveal">
                     <div class="project-card-content">
                         <h3>Economic & Crime Analysis</h3>
                         <p>Conducted analyses on the economic impact of COVID-19 on the Indian economy and a separate study on U.S. crime rates using a rational choice model and time series analysis.</p>
                     </div>
-                    <button class="ai-summarize-btn">✨ Summarize with AI</button>
+                    <div class="project-card-footer">
+                        <button class="ai-summarize-btn">Summarize with AI</button>
+                    </div>
                 </div>
             </div>
         </section>
