@@ -129,14 +129,9 @@
             }
         }
         
-        /* Shake and fall effect */
-        .fall-item {
-            transition: transform 1s cubic-bezier(0.68, -0.55, 0.27, 1.55), opacity 0.8s ease-out;
-        }
-        .fall-effect {
-            transform: translateY(120vh) rotate(10deg) scale(0.8);
-            opacity: 0;
-            pointer-events: none;
+        /* UPDATED: Shake effect CSS */
+        .shake-item {
+            transition: transform 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
 
     </style>
@@ -458,53 +453,52 @@
                 addMessageToChat('<div class="loading-spinner"></div>', 'ai');
 
                 try {
-                    // UPDATED: Combined portfolio context from webpage and CV PDF
                     const portfolioContext = `
-                        **From Webpage:**
-                        Name: Rahul Arya.
-                        Roles: Economist, Data Scientist, ML Enthusiast.
-                        Experience: Credit Risk at Central Bank of India, Product Manager & Marketing Intern at Beyondriffs.
-                        Projects: Farmer Income Prediction, AMEX Offer Engagement, Credit Card Fraud Detection, AI Supply Chain Analytics, COVID-19 Economic Impact.
-                        Education: M.A. Economics from Delhi School of Economics, B.A. Economics from University of Delhi.
-                        Skills: Python, SQL, Power BI, ML (XGBoost, LightGBM, Keras), Dask, Leadership, Teamwork, Problem-Solving, Adaptability, Quick Learner.
+                        **Personal Information:**
+                        Name: Rahul Arya
+                        Email: rahularyajii2002@gmail.com
+                        Portfolio: https://rahularya014.github.io/rahularya014/
 
-                        **From CV (excluding personal contact details):**
-                        Academic Qualifications:
-                        - M.A. Economics, Delhi School of Economics (2024-2026 Expected)
-                        - B.A. (H) Economics, Satyawati College, University of Delhi (2023, 7.37/10)
-                        - Class XII (CBSE), Millia Convent English School, Purnia (2020, 80.20%)
-                        - Class X (CBSE), Millia Convent English School, Purnia (2018, 76.40%)
+                        **Education:**
+                        - M.A. Economics, Delhi School of Economics (2024-2026, Marks: 5.15/10)
+                        - B.A. (H) Economics, Satyawati College, University of Delhi (2023, Marks: 7.37/10)
+                        - Class XII (CBSE), Millia Convent English School, Purnia (2020, Marks: 80.20%)
+                        - Class X (CBSE), Millia Convent English School, Purnia (2018, Marks: 76.40%)
 
-                        Academic Achievements:
-                        - Secured AIR 66 in the competitive IIT Delhi M.Sc. Economics entrance exam (2024).
-                        - Received Admission offer letter for M.A. Economics from DTU, Madras School of Economics, GIPE, CDS, Ashoka (2024).
+                        **Academic Achievements:**
+                        - Secured AIR 66 in IIT Delhi M.Sc. Economics Entrance Exam (2024).
+                        - Received M.A. Economics admission offers from DTU, Madras School of Economics, GIPE, CDS, Ashoka University (2024).
 
-                        Internships:
-                        - Credit Risk Modelling Intern, Central Bank of India (2025): Developed expertise in credit risk modeling using ML, combining strong banking domain knowledge (NPA, DPD) with feature engineering. Implemented end-to-end ML workflows and integrated key regulatory risk measures like Basel III and PAR metrics.
-                        - Product Manager & Marketing Intern, Beyondriffs (2024): Led an initiative that boosted engagement by 18%, refined project roadmaps, conducted user research with 250+ users, and developed customer-focused strategies from 100+ surveys.
+                        **Internships:**
+                        - Credit Risk Modelling Intern, Central Bank of India (2025): Developed expertise in credit risk modeling using ML, banking data (NPA, DPD), various statistical tests (ANOVA, Chi-square), and models like XGBoost & Random Forest. Evaluated models using precision, recall, F1, MAPE, and RMSE. Integrated Basel III and PAR metrics.
+                        - Product Manager & Marketing Intern, Beyondriffs (2024): Boosted user engagement by 18%, refined roadmaps, conducted extensive user research (250+ interactions, 100+ surveys), and created product narratives.
 
-                        Academic Projects:
-                        - Farmer Income Prediction (2025): Developed a model integrating various data types, engineered features, tuned an XGBoost+LightGBM ensemble to raise R² to 0.7513, and deployed a REST API.
-                        - Credit Card Fraud Detection (2025): Designed a Keras autoencoder on 227K+ transactions (ROC-AUC ≈ 0.95) and a Sklearn pipeline (93.4% test accuracy).
-                        - AI-Powered Supply Chain Analytics (2025): Automated a scalable end-to-end ETL pipeline with N8N and leveraged Quadratic AI for KPI computation.
-                        - Impact of COVID-19 on Indian Economy (2022): Analyzed data showing a 23.9% GDP drop and a sharp 37% export decline in Q2 2020.
+                        **Academic Projects:**
+                        - Predicting Farmers’ Income in India (2025): Integrated demographic, climatic, and market data. Used Lasso feature selection and an XGBoost+LightGBM ensemble to achieve R² of 0.7513. Deployed a REST API.
+                        - Credit Card Fraud Detection (2025): Trained a Keras autoencoder on 227K+ transactions (ROC-AUC ≈ 0.95) and a Sklearn pipeline (93.4% test accuracy).
+                        - AI-Powered Supply Chain Analytics (2025): Built an automated ETL pipeline with N8N and Supabase. Used Quadratic AI for dynamic KPI computation.
+                        - Impact of COVID-19 on Indian Economy (2022): Analyzed a 23.9% GDP contraction and a 37% export decline in Q2 2020.
 
-                        Positions of Responsibility:
-                        - House Captain, Millia Convent English School (2018): Organized and coordinated school events, demonstrated leadership and teamwork.
+                        **Positions of Responsibility:**
+                        - House Captain, Millia Convent English School (2018): Organized school events, demonstrated leadership and teamwork.
 
-                        Extra-Curricular Activities:
-                        - Achieved AIR 422 in the AMEX Campus Challenge (2025) with an "Offer Engagement Forecasting Model".
-                        - Participated in various hackathons on Unstop (Amex, L'Oréal & TVS).
-                        - Coordinator of the Optima Economics Society at Satyawati College (2023).
+                        **Extracurricular Activities:**
+                        - AMEX Campus Challenge (2025): Achieved AIR 422 with an Offer Engagement Forecasting Model (AUC 0.82). Engineered 400+ features.
+                        - Hackathon Participation (2025): Participated in national-level hackathons by Amex, L'Oréal, and TVS.
+                        - Coordinator, Optima Economics Society, Satyawati College (2023).
 
-                        Certifications:
-                        - Career Essentials in Data Analysis by Microsoft And LinkedIn.
-                        - Analysing and Visualizing data with Microsoft Power BI.
+                        **Skills:**
+                        - Technical: Python, Machine Learning (ML), MySQL, MS Excel, MS PowerPoint, Power BI.
+                        - Interpersonal: Teamwork, Quick Learner, Leadership, Adaptability, Avid Learner.
+
+                        **Certifications:**
+                        - Career Essentials in Data Analysis by Microsoft and LinkedIn.
+                        - Analyzing and Visualizing Data with Microsoft Power BI.
                         - MySQL 5.6 Database Administrator.
-                        - Python for beginners.
+                        - Python for Beginners.
                     `;
 
-                    const systemPrompt = `You are a helpful AI assistant for Rahul Arya's portfolio. Your goal is to answer questions based ONLY on the provided context from his webpage and CV. Be friendly, professional, and concise. Do not invent information. Explicitly ignore any phone number or physical address. If the answer is not in the context, say "I can only answer questions based on the information in Rahul's portfolio and CV." Context: ${portfolioContext}`;
+                    const systemPrompt = `You are a helpful AI assistant for Rahul Arya's portfolio. Your goal is to answer questions based ONLY on the provided, detailed context from his CV. Be friendly, professional, and concise. Do not invent information. Explicitly ignore any phone number or physical address. If the answer is not in the context, say "I can only answer questions based on the information in Rahul's portfolio and CV." Context: ${portfolioContext}`;
                     
                     const payload = {
                         contents: [{ parts: [{ text: userQuery }] }],
@@ -558,20 +552,20 @@
                 observer.observe(el);
             });
             
-             // --- SHAKE TO FALL FEATURE ---
-            const shakeThreshold = 25;
+             // --- UPDATED: SHAKE TO DISALIGN FEATURE ---
+            const shakeThreshold = 15; // Made it a bit more sensitive
             let lastX, lastY, lastZ;
             let lastShakeTime = 0;
-            const shakeCooldown = 5000; // 5 seconds cooldown to prevent spam
-            let isFallen = false;
+            const shakeCooldown = 5000; // 5 seconds cooldown
+            let isShaken = false;
             let motionPermissionGranted = false;
 
-            const fallItems = document.querySelectorAll('header, main > section, footer');
-            fallItems.forEach(item => item.classList.add('fall-item'));
+            const shakeItems = document.querySelectorAll('header, main > section, footer');
+            shakeItems.forEach(item => item.classList.add('shake-item'));
 
             function handleMotionEvent(event) {
                 const currentTime = new Date().getTime();
-                if ((currentTime - lastShakeTime) < shakeCooldown || isFallen) {
+                if ((currentTime - lastShakeTime) < shakeCooldown || isShaken) {
                     return;
                 }
 
@@ -589,7 +583,7 @@
 
                     if ((deltaX + deltaY + deltaZ) > shakeThreshold) {
                         lastShakeTime = currentTime;
-                        triggerFall();
+                        triggerShake();
                     }
                 }
                 lastX = currentX;
@@ -597,25 +591,30 @@
                 lastZ = currentZ;
             }
 
-            function triggerFall() {
-                isFallen = true;
-                fallItems.forEach(item => {
-                    item.classList.add('fall-effect');
+            function triggerShake() {
+                isShaken = true;
+                shakeItems.forEach(item => {
+                    const x = (Math.random() - 0.5) * 60; // Random horizontal shift (-30px to 30px)
+                    const y = (Math.random() - 0.5) * 60; // Random vertical shift (-30px to 30px)
+                    const rot = (Math.random() - 0.5) * 10; // Random rotation (-5deg to 5deg)
+                    item.style.transform = `translate(${x}px, ${y}px) rotate(${rot}deg)`;
                 });
-                setTimeout(resetFall, 2000);
+                setTimeout(resetShake, 2000); // Wait 2 seconds before smoothly resetting
             }
 
-            function resetFall() {
-                fallItems.forEach((item, index) => {
-                    item.style.transitionDelay = `${index * 0.15}s`;
-                    item.classList.remove('fall-effect');
+            function resetShake() {
+                shakeItems.forEach((item, index) => {
+                    // Stagger the return animation for a nice effect
+                    item.style.transitionDelay = `${index * 0.1}s`; 
+                    item.style.transform = 'translate(0, 0) rotate(0deg)';
                 });
-                const totalAnimationTime = 2000 + fallItems.length * 150;
+
+                const totalAnimationTime = 2000 + shakeItems.length * 100;
                 setTimeout(() => {
-                    fallItems.forEach(item => {
-                        item.style.transitionDelay = '';
+                    shakeItems.forEach(item => {
+                        item.style.transitionDelay = ''; // Clear delay after animation
                     });
-                    isFallen = false;
+                    isShaken = false; // Allow shaking again
                 }, totalAnimationTime);
             }
 
