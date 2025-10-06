@@ -27,7 +27,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background-image: url('https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?q=80&w=2071&auto=format&fit=crop');
+            background-image: url('https://images.unsplash.com/photo-1534796636912-3b95-b3ab5986?q=80&w=2071&auto=format&fit=crop');
             background-size: cover;
             background-position: center;
             background-attachment: fixed; /* This creates the parallax effect */
@@ -37,9 +37,8 @@
 
         .header-bg {
             background-image: linear-gradient(to top, rgba(20, 20, 20, 1) 0%, rgba(20, 20, 20, 0) 50%, rgba(20, 20, 20, 1) 100%), url('https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=2070&auto=format&fit=crop');
-            background-size: 110%; /* Slightly larger for movement */
+            background-size: 110%; /* Corrected for parallax effect */
             background-position: center;
-            transition: background-position 0.2s ease-out;
         }
 
         .card-row {
@@ -50,7 +49,7 @@
             display: none;
         }
         
-        /* 3D Tilt Effect on Cards */
+        /* 3D Tilt Effect on Cards with Enhanced Glow */
         .card {
             transition: transform 0.2s ease-out, box-shadow 0.3s ease;
             cursor: pointer;
@@ -58,7 +57,7 @@
             transform-style: preserve-3d;
         }
         .card:hover {
-            box-shadow: 0 15px 30px rgba(0,0,0,0.7);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.7), 0 0 30px 4px rgba(229, 9, 20, 0.6);
         }
         
         .modal {
@@ -109,12 +108,20 @@
             opacity: 1;
             transform: translateY(0);
         }
+        
+        /* Section Divider */
+        .divider {
+            height: 1px;
+            width: 100%;
+            max-width: 1200px; /* Adjust to match your content width */
+            margin: -1px auto 0 auto;
+            background: transparent;
+            border-bottom: 1px solid rgba(229, 9, 20, 0.2);
+            box-shadow: 0 5px 15px -5px rgba(229, 9, 20, 0.4);
+        }
 
         /* Mobile Responsive Adjustments */
         @media (max-width: 768px) {
-            .header-bg {
-                background-size: cover; /* Disable zoom on mobile for performance */
-            }
             .card-row {
                 flex-direction: column;
                 align-items: center;
@@ -128,98 +135,10 @@
                 display: none; /* Hide nav links, could be replaced with hamburger */
             }
         }
-        
-        /* Shake effect CSS */
-        .shake-item {
-            transition: transform 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
-        }
-        
-        /* Shake Toast Notification */
-        #shake-toast {
-            transform: translateY(20px);
-            transition: opacity 0.5s ease, transform 0.5s ease;
-        }
-        #shake-toast.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* AI Robot Animation */
-        .ai-robot {
-            position: relative;
-            width: 40px;
-            height: 50px;
-            animation: bob 2s infinite ease-in-out;
-            flex-shrink: 0;
-        }
-        .ai-robot .head {
-            width: 40px;
-            height: 30px;
-            background-color: #E50914; /* Netflix Red */
-            border-radius: 20px 20px 8px 8px;
-            position: relative;
-            overflow: hidden;
-        }
-        .ai-robot .eye {
-            width: 6px;
-            height: 8px;
-            background-color: white;
-            border-radius: 50%;
-            position: absolute;
-            top: 12px;
-            animation: blink 3s infinite;
-        }
-        .ai-robot .eye.left { left: 8px; }
-        .ai-robot .eye.right { right: 8px; }
-
-        .ai-robot .mouth {
-            width: 15px;
-            height: 2px;
-            background-color: white;
-            position: absolute;
-            bottom: 8px;
-            left: 12.5px;
-            border-radius: 1px;
-        }
-        .ai-robot .body {
-            width: 30px;
-            height: 20px;
-            background-color: #a0a0a0;
-            border-radius: 8px 8px 15px 15px;
-            position: absolute;
-            bottom: 0;
-            left: 5px;
-        }
-        
-        @keyframes bob {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-5px); }
-        }
-        @keyframes blink {
-            0%, 90%, 100% { transform: scaleY(1); }
-            95% { transform: scaleY(0.1); }
-        }
 
     </style>
 </head>
 <body class="bg-[#141414]">
-
-    <!-- Shake Message Toast -->
-    <div id="shake-toast" class="fixed bottom-5 right-5 bg-gray-800 border border-red-500 text-white p-4 rounded-lg shadow-lg flex items-center gap-4 z-50 opacity-0 pointer-events-none">
-        <div class="ai-robot">
-            <div class="head">
-                <div class="eye left"></div>
-                <div class="eye right"></div>
-                <div class="mouth"></div>
-            </div>
-            <div class="body"></div>
-        </div>
-        <div>
-            <p class="font-bold">Please don't shake the phone!</p>
-            <p class="text-sm text-gray-300">The network is a bit slow, please wait.</p>
-        </div>
-    </div>
-
 
     <!-- Top Navigation -->
     <nav id="top-nav" class="fixed top-0 left-0 right-0 z-40 p-4 md:px-12 flex justify-between items-center top-nav">
@@ -246,6 +165,9 @@
             </div>
         </div>
     </header>
+    
+    <!-- New Section Divider -->
+    <div class="divider"></div>
 
     <main class="py-12 px-4 md:px-12 space-y-16">
 
@@ -367,7 +289,7 @@
                     <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
                 </a>
             </div>
-             <a href="mailto:rahularyajii2002@gmail.com?subject=Resume%20Request%20from%20Portfolio" class="inline-block px-8 py-3 bg-red-600 text-white font-bold rounded hover:bg-red-700 transition-transform hover:scale-105">Request Resume</a>
+             <a href="mailto:rahularyajii2002@gmail.com?subject=Resume%20Request%_20from%20Portfolio" class="inline-block px-8 py-3 bg-red-600 text-white font-bold rounded hover:bg-red-700 transition-transform hover:scale-105">Request Resume</a>
              <p class="text-gray-500 mt-8">&copy; 2024 Rahul Arya. All Rights Reserved.</p>
         </div>
     </footer>
@@ -391,12 +313,12 @@
     <div id="ai-modal" class="modal fixed inset-0 bg-black bg-opacity-70 z-50 flex items-center justify-center p-4 hidden opacity-0">
         <div class="bg-[#181818] rounded-lg max-w-lg w-full flex flex-col h-[70vh]">
             <div class="p-4 border-b border-gray-700 flex justify-between items-center">
-                <h3 class="text-xl font-bold">Rahul's AI Assistant</h3>
+                <h3 class="text-xl font-bold">Rahul's Personal Assistant</h3>
                 <button id="close-ai-modal" class="text-white text-2xl">&times;</button>
             </div>
             <div id="ai-chat-box" class="flex-grow p-4 overflow-y-auto space-y-4">
                 <div class="ai-chat-bubble p-3 bg-gray-700 rounded-lg max-w-xs">
-                    <p>Hello! Ask me anything about Rahul's skills, projects, or experience.</p>
+                    <p>Hello! I'm Rahul's personal assistant. Ask me anything about his skills, projects, or experience.</p>
                 </div>
             </div>
             <div class="p-4 border-t border-gray-700 flex items-center">
@@ -420,9 +342,8 @@
             });
             
             // Header background parallax effect
-            const header = document.querySelector('.header-bg');
-            // This effect is best on desktop. It is disabled on smaller screens via the media query in CSS.
             if (window.innerWidth > 768) {
+                const header = document.querySelector('.header-bg');
                 window.addEventListener('mousemove', (e) => {
                     const { clientX, clientY } = e;
                     const x = (clientX / window.innerWidth - 0.5) * 40; // Intensity
@@ -431,8 +352,8 @@
                     header.style.backgroundPosition = `calc(50% + ${x}px) calc(50% + ${y}px)`;
                 });
             }
-
-            // 3D Card Tilt Effect
+            
+            // Re-added 3D Card Tilt Effect
             const cards = document.querySelectorAll('.card');
             cards.forEach(card => {
                 card.addEventListener('mousemove', (e) => {
@@ -523,10 +444,25 @@
                 } else {
                     bubble.classList.add('bg-gray-700', 'self-start');
                 }
-                bubble.innerHTML = message; // Use innerHTML to render loading spinner
+                bubble.innerHTML = message; // Use innerHTML to render formatted response
                 aiChatBox.appendChild(bubble);
                 aiChatBox.scrollTop = aiChatBox.scrollHeight;
             };
+            
+            function formatAIResponse(text) {
+                // Use a more robust markdown-to-HTML conversion
+                let html = text
+                    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') // Bold
+                    .replace(/^- (.*$)/gm, '<li>$1</li>'); // List items start
+
+                // Wrap consecutive list items in a <ul> tag
+                if (html.includes('<li>')) {
+                    html = '<ul>' + html.replace(/<\/li>\n<li>/g, '</li><li>') + '</ul>';
+                    html = html.replace(/<\/li><ul>/g, '</li></ul><ul>').replace(/<\/ul><li>/g, '</ul><ul><li>');
+                }
+
+                return html.replace(/\n/g, '<br>'); // Handle paragraphs
+            }
 
             const handleAIChat = async () => {
                 const userQuery = aiInput.value.trim();
@@ -582,7 +518,7 @@
                         - Python for Beginners.
                     `;
 
-                    const systemPrompt = `You are a helpful AI assistant for Rahul Arya's portfolio. Your goal is to answer questions based ONLY on the provided, detailed context from his CV. Be friendly, professional, and concise. Do not invent information. Explicitly ignore any phone number or physical address. If the answer is not in the context, say "I can only answer questions based on the information in Rahul's portfolio and CV." Context: ${portfolioContext}`;
+                    const systemPrompt = `You are Rahul Arya's personal AI assistant. Your goal is to answer questions based ONLY on the provided, detailed context from his CV. Be friendly, professional, and concise. Do not invent information. Explicitly ignore any phone number or physical address. If the answer is not in the context, say "I can only answer questions based on the information in Rahul's portfolio and CV." Context: ${portfolioContext}`;
                     
                     const payload = {
                         contents: [{ parts: [{ text: userQuery }] }],
@@ -603,7 +539,7 @@
                     const aiResponse = result.candidates[0].content.parts[0].text;
                     
                     const loadingBubble = aiChatBox.querySelector('.loading-spinner').parentElement;
-                    loadingBubble.innerHTML = `<p>${aiResponse}</p>`;
+                    loadingBubble.innerHTML = formatAIResponse(aiResponse); // Use the formatter here
                     aiChatBox.scrollTop = aiChatBox.scrollHeight;
 
 
@@ -635,108 +571,9 @@
             document.querySelectorAll('.reveal').forEach(el => {
                 observer.observe(el);
             });
-            
-             // --- SHAKE FEATURE ---
-            const shakeThreshold = 15;
-            let lastX, lastY, lastZ;
-            let lastShakeTime = 0;
-            const shakeCooldown = 5000; // 5 seconds
-            let isShaken = false;
-            let motionPermissionGranted = false;
-            const shakeToast = document.getElementById('shake-toast');
-
-            const shakeItems = document.querySelectorAll('header, main > section, footer');
-            shakeItems.forEach(item => item.classList.add('shake-item'));
-
-            function handleMotionEvent(event) {
-                const currentTime = new Date().getTime();
-                if ((currentTime - lastShakeTime) < shakeCooldown || isShaken) {
-                    return;
-                }
-
-                const acceleration = event.accelerationIncludingGravity;
-                if (!acceleration || !acceleration.x) { return; }
-
-                const currentX = acceleration.x;
-                const currentY = acceleration.y;
-                const currentZ = acceleration.z;
-
-                if (lastX !== undefined) {
-                    const deltaX = Math.abs(lastX - currentX);
-                    const deltaY = Math.abs(lastY - currentY);
-                    const deltaZ = Math.abs(lastZ - currentZ);
-
-                    if ((deltaX + deltaY + deltaZ) > shakeThreshold) {
-                        lastShakeTime = currentTime;
-                        triggerShake();
-                    }
-                }
-                lastX = currentX;
-                lastY = currentY;
-                lastZ = currentZ;
-            }
-
-            function triggerShake() {
-                isShaken = true;
-                
-                // Show the toast message
-                shakeToast.classList.add('visible');
-
-                // Disalign items
-                shakeItems.forEach(item => {
-                    const x = (Math.random() - 0.5) * 40;
-                    const y = (Math.random() - 0.5) * 40;
-                    const rot = (Math.random() - 0.5) * 8;
-                    item.style.transform = `translate(${x}px, ${y}px) rotate(${rot}deg)`;
-                });
-
-                // Set timer to hide toast and reset positions
-                setTimeout(resetShake, 3000); // Wait 3 seconds
-            }
-
-            function resetShake() {
-                // Hide the toast message
-                shakeToast.classList.remove('visible');
-                
-                // Reset item positions
-                shakeItems.forEach((item, index) => {
-                    item.style.transitionDelay = `${index * 0.1}s`; 
-                    item.style.transform = 'translate(0, 0) rotate(0deg)';
-                });
-
-                const totalAnimationTime = 1000 + shakeItems.length * 100;
-                setTimeout(() => {
-                    shakeItems.forEach(item => {
-                        item.style.transitionDelay = '';
-                    });
-                    isShaken = false;
-                }, totalAnimationTime);
-            }
-
-            function requestMotionPermission() {
-                 if (motionPermissionGranted || typeof DeviceMotionEvent.requestPermission !== 'function') {
-                    return;
-                }
-                DeviceMotionEvent.requestPermission()
-                    .then(permissionState => {
-                        if (permissionState === 'granted') {
-                            window.addEventListener('devicemotion', handleMotionEvent);
-                            motionPermissionGranted = true;
-                        }
-                    })
-                    .catch(console.error);
-            }
-
-            document.body.addEventListener('click', requestMotionPermission, { once: true });
-            
-            if (window.DeviceMotionEvent && typeof DeviceMotionEvent.requestPermission !== 'function') {
-                window.addEventListener('devicemotion', handleMotionEvent);
-            }
 
         });
     </script>
 </body>
 </html>
-
-
 
