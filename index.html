@@ -3,1130 +3,417 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rahul Arya | Economist & Data Scientist</title>
+    <title>Rahul Arya | Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --bg-color: #0a0a0a;
-            --primary-color: #1a1a1a;
-            --secondary-color: #2a2a2a;
-            --accent-color: #00f0ff; /* Brighter Cyan */
-            --accent-glow: rgba(0, 240, 255, 0.6); /* Brighter Glow */
-            --text-primary: #e0e0e0;
-            --text-secondary: #a0a0a0;
-            --border-color: rgba(255, 255, 255, 0.1);
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
         html {
             scroll-behavior: smooth;
         }
-
         body {
-            background-color: var(--bg-color);
-            color: var(--text-primary);
+            background-color: #141414;
             font-family: 'Inter', sans-serif;
-            line-height: 1.6;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            overflow-x: hidden;
+            color: #fff;
         }
-        
-        #particle-canvas {
-            position: fixed; /* Changed to fixed */
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1; /* Pushed to the very back */
+        .header-bg {
+            background-image: linear-gradient(to top, rgba(20, 20, 20, 1) 0%, rgba(20, 20, 20, 0) 50%, rgba(20, 20, 20, 1) 100%), url('https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=2070&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
         }
-
-        .container {
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 0 2rem;
-            position: relative; /* Ensure content is above canvas */
-            z-index: 2;
+        .card-row {
+            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none;  /* IE and Edge */
         }
-
-        /* --- Hero Section --- */
-        .hero {
-            position: relative;
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            overflow: hidden;
+        .card-row::-webkit-scrollbar {
+            display: none; /* Chrome, Safari, and Opera */
         }
-
-        .hero-content {
-            position: relative;
-            z-index: 2;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        
-        /* Entry Animations */
-        .hero h1, .hero .subtitle, .hero .social-links, .hero .cta-button {
-            opacity: 0;
-            transform: translateY(20px);
-            animation: fadeIn-up 0.8s forwards cubic-bezier(0.2, 0.8, 0.2, 1);
-        }
-        .hero .subtitle { animation-delay: 0.2s; }
-        .hero .social-links { animation-delay: 0.4s; }
-        .hero .cta-button { animation-delay: 0.6s; }
-
-        @keyframes fadeIn-up {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-
-        .hero h1 {
-            font-size: clamp(2.5rem, 8vw, 5rem);
-            font-weight: 800;
-            margin-bottom: 0.5rem;
-            letter-spacing: -2px;
-            background: linear-gradient(90deg, #fff, #aaa);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .hero .subtitle {
-            font-family: 'Roboto Mono', monospace;
-            font-size: clamp(1rem, 4vw, 1.5rem);
-            color: var(--accent-color);
-            margin-bottom: 1.5rem;
-            height: 2rem;
-        }
-
-        .typing-cursor {
-            display: inline-block;
-            width: 10px;
-            height: 1.5rem;
-            background-color: var(--accent-color);
-            animation: blink 0.7s infinite;
-            margin-left: 5px;
-        }
-
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0; }
-        }
-
-        .social-links {
-            display: flex;
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-
-        .social-links a {
-            color: var(--text-secondary);
-            font-size: 1.5rem;
-            transition: color 0.3s ease, transform 0.3s ease;
-        }
-
-        .social-links a:hover {
-            color: var(--accent-color);
-            transform: translateY(-3px);
-        }
-
-        .cta-button {
-            background: var(--accent-color);
-            color: #000; /* Changed for better contrast */
-            padding: 12px 24px;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
-            box-shadow: 0 0 15px var(--accent-glow);
-        }
-
-        .cta-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 0 25px var(--accent-glow);
-        }
-        
-        .scroll-down-indicator {
-            position: absolute;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 3;
-            color: var(--text-secondary);
-            font-size: 0.8rem;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 8px;
-            animation: bounce 2s infinite;
-        }
-
-        .scroll-down-indicator .mouse {
-            width: 24px;
-            height: 40px;
-            border: 2px solid var(--text-secondary);
-            border-radius: 12px;
-            position: relative;
-        }
-
-        .scroll-down-indicator .scroller {
-            width: 4px;
-            height: 8px;
-            background: var(--text-secondary);
-            border-radius: 2px;
-            position: absolute;
-            left: 50%;
-            top: 8px;
-            transform: translateX(-50%);
-            animation: scroll-anim 2s infinite;
-        }
-
-        @keyframes scroll-anim {
-            0% { top: 8px; opacity: 1; }
-            100% { top: 20px; opacity: 0; }
-        }
-
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% { transform: translateY(0) translateX(-50%); }
-            40% { transform: translateY(-10px) translateX(-50%); }
-            60% { transform: translateY(-5px) translateX(-50%); }
-        }
-
-
-        /* --- General Section Styling --- */
-        .section {
-            padding: 6rem 0;
-            border-bottom: 1px solid var(--border-color);
-            background: rgba(10, 10, 10, 0.5); /* Semi-transparent background for sections */
-            backdrop-filter: blur(2px);
-        }
-        
-        .section-title {
-            text-align: center;
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 3rem;
-            position: relative;
-        }
-
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 60px;
-            height: 4px;
-            background-color: var(--accent-color);
-            border-radius: 2px;
-        }
-        
-        /* Reveal on Scroll Animation */
-        .reveal {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.8s ease, transform 0.8s ease;
-        }
-        .reveal.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* --- About Section --- */
-        #about p {
-            max-width: 700px;
-            margin: 0 auto;
-            text-align: center;
-            font-size: 1.1rem;
-            color: var(--text-secondary);
-        }
-
-        /* --- Experience & Education Timeline --- */
-        .timeline {
-            position: relative;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .timeline::after {
-            content: '';
-            position: absolute;
-            width: 3px;
-            background-color: var(--border-color);
-            top: 0;
-            bottom: 0;
-            left: 50%;
-            margin-left: -1.5px;
-        }
-
-        .timeline-item {
-            padding: 10px 40px;
-            position: relative;
-            background-color: inherit;
-            width: 50%;
-        }
-        
-        .timeline-item.left { left: 0; }
-        .timeline-item.right { left: 50%; }
-
-        .timeline-item::after {
-            content: '';
-            position: absolute;
-            width: 16px;
-            height: 16px;
-            right: -9px;
-            background-color: var(--bg-color);
-            border: 3px solid var(--accent-color);
-            top: 25px;
-            border-radius: 50%;
-            z-index: 1;
-            transition: transform 0.3s ease;
-        }
-
-        .timeline-item:hover::after {
-            transform: scale(1.2);
-        }
-
-        .timeline-item.right::after {
-            left: -9px;
-        }
-
-        .timeline-content {
-            padding: 20px 30px;
-            background-color: var(--primary-color);
-            position: relative;
-            border-radius: 8px;
-            border: 1px solid var(--border-color);
-            transition: box-shadow 0.3s ease;
-        }
-        
-        .timeline-item:hover .timeline-content {
-            box-shadow: 0 0 20px rgba(0, 240, 255, 0.1);
-        }
-        
-        .timeline-content h3 {
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: var(--text-primary);
-        }
-        
-        .timeline-content h4 {
-            font-size: 1rem;
-            font-weight: 500;
-            color: var(--accent-color);
-            margin-bottom: 0.5rem;
-        }
-        
-        .timeline-content p {
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-        }
-        
-        .timeline-date {
-            position: absolute;
-            top: 22px;
-            width: 100px;
-            font-family: 'Roboto Mono', monospace;
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-            background: var(--bg-color);
-            padding: 2px 8px;
-        }
-        
-        .timeline-item.left .timeline-date {
-            right: -140px;
-            text-align: left;
-        }
-        
-        .timeline-item.right .timeline-date {
-            left: -140px;
-            text-align: right;
-        }
-
-        /* --- Projects Section --- */
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
-        }
-
-        .project-card {
-            background: var(--primary-color);
-            border: 1px solid var(--border-color);
-            border-radius: 10px;
-            padding: 1.5rem;
+        .card {
             transition: transform 0.3s ease, box-shadow 0.3s ease;
-            will-change: transform;
-            display: flex;
-            flex-direction: column;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .project-card::before {
-            content: "";
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            border-radius: 10px;
-            background: radial-gradient(
-                800px circle at var(--mouse-x, 0) var(--mouse-y, 0),
-                rgba(0, 240, 255, 0.2),
-                transparent 40%
-            );
-            opacity: 0;
-            transition: opacity 0.5s;
-        }
-        
-        .project-card:hover::before {
-            opacity: 1;
-        }
-        
-        .project-card-content {
-            flex-grow: 1;
-            position: relative;
-            z-index: 2;
-        }
-
-        .project-card h3 {
-            color: var(--accent-color);
-            margin-bottom: 0.5rem;
-        }
-
-        .project-card p {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-        }
-        
-        .project-card a {
-            text-decoration: none;
-            color: inherit;
-        }
-        
-        .project-card-footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 1rem;
-            position: relative;
-            z-index: 2;
-        }
-
-        .ai-summarize-btn, .view-project-btn {
-            background: none;
-            border: 1px solid var(--accent-color);
-            color: var(--accent-color);
-            padding: 8px 12px;
-            border-radius: 6px;
             cursor: pointer;
-            font-family: 'Roboto Mono', monospace;
-            font-size: 0.8rem;
-            transition: background 0.3s, color 0.3s;
-            text-decoration: none;
+            flex-shrink: 0;
         }
-
-        .ai-summarize-btn:hover, .view-project-btn:hover {
-            background: var(--accent-color);
-            color: #000;
+        .card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
         }
-
-        /* --- Skills Section --- */
-        .skills-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 2rem;
-            justify-content: center;
+        .modal {
+            transition: opacity 0.3s ease-in-out;
         }
-
-        .skill-category {
-            width: 45%;
-            min-width: 300px;
+        .ai-chat-bubble {
+            animation: fadeIn 0.5s ease-in-out;
         }
-
-        .skill-category h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-            border-left: 4px solid var(--accent-color);
-            padding-left: 1rem;
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-
-        .skills-list {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.75rem;
-        }
-
-        .skill-item {
-            background: var(--secondary-color);
-            color: var(--text-secondary);
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            font-weight: 500;
-            transition: background 0.3s, color 0.3s, transform 0.3s;
-        }
-        .skill-item:hover {
-            background: var(--accent-color);
-            color: #000;
-            transform: translateY(-2px);
-        }
-        
-        /* --- Contact Section --- */
-        #contact {
-            text-align: center;
-        }
-        #contact p {
-            max-width: 500px;
-            margin: 0 auto 2rem auto;
-            color: var(--text-secondary);
-        }
-        .magnetic-btn {
-            display: inline-block;
-            position: relative;
-        }
-        
         .loading-spinner {
             border: 4px solid rgba(255, 255, 255, 0.2);
-            border-top: 4px solid var(--accent-color);
+            border-top: 4px solid #E50914;
             border-radius: 50%;
-            width: 40px;
-            height: 40px;
+            width: 30px;
+            height: 30px;
             animation: spin 1s linear infinite;
-            margin: 20px auto;
         }
-
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
-
-        /* --- Modal Styling --- */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(5px);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
+        .skill-tag {
+            transition: all 0.2s ease-in-out;
         }
-        .modal-overlay.visible {
-            opacity: 1;
-            visibility: visible;
+        .skill-tag:hover {
+            background-color: #E50914;
+            color: #fff;
         }
-        .modal-content {
-            background: var(--primary-color);
-            padding: 2rem;
-            border-radius: 10px;
-            border: 1px solid var(--border-color);
-            max-width: 600px;
-            width: 90%;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            transform: scale(0.95);
-            transition: transform 0.3s ease;
+        .top-nav {
+            transition: background-color 0.3s ease-in-out;
         }
-        .modal-overlay.visible .modal-content {
-            transform: scale(1);
-        }
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
-        }
-        .modal-header h3 {
-            color: var(--accent-color);
-        }
-        .close-modal {
-            background: none;
-            border: none;
-            color: var(--text-secondary);
-            font-size: 1.5rem;
-            cursor: pointer;
-            transition: color 0.3s;
-        }
-        .close-modal:hover {
-            color: var(--text-primary);
-        }
-        #modal-body {
-            color: var(--text-secondary);
-        }
-
-
-        /* --- Footer --- */
-        footer {
-            text-align: center;
-            padding: 3rem 0;
-            color: var(--text-secondary);
-        }
-        
-        footer .social-links {
-            justify-content: center;
-            margin-bottom: 1rem;
-        }
-
-        /* --- Responsive Design --- */
-        @media (max-width: 768px) {
-            .timeline::after {
-                left: 20px;
-            }
-
-            .timeline-item {
-                width: 100%;
-                padding-left: 50px;
-                padding-right: 10px;
-            }
-
-            .timeline-item.right {
-                left: 0%;
-            }
-
-            .timeline-item.left::after, .timeline-item.right::after {
-                left: 11px;
-            }
-            
-            .timeline-item.left .timeline-date, .timeline-item.right .timeline-date {
-                position: relative;
-                left: 0;
-                top: -5px;
-                margin-bottom: 10px;
-                display: inline-block;
-                text-align: left; /* Ensure consistent alignment on mobile */
-            }
-
-            .skill-category {
-                width: 100%;
-            }
+        .top-nav.scrolled {
+            background-color: #141414;
         }
     </style>
 </head>
-<body>
-    <canvas id="particle-canvas"></canvas>
-    <!-- HERO SECTION -->
-    <header class="hero">
-        <div class="hero-content">
-            <h1>Rahul Arya</h1>
-            <p class="subtitle"><span id="typing-text"></span><span class="typing-cursor"></span></p>
-            <div class="social-links">
-                <a href="mailto:rahularyajii2002@gmail.com" title="Email" target="_blank">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-                </a>
-                <a href="https://www.linkedin.com/in/rahul-arya-034214221" title="LinkedIn" target="_blank">
-                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
-                </a>
-                 <a href="https://github.com/rahularya014" title="GitHub" target="_blank">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
-                </a>
-                 <a href="https://www.instagram.com/rahularya014" title="Instagram" target="_blank">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
-                </a>
-            </div>
-            <a href="#projects" class="cta-button">View My Work</a>
+<body class="bg-[#141414]">
+
+    <!-- Top Navigation -->
+    <nav id="top-nav" class="fixed top-0 left-0 right-0 z-40 p-4 md:px-12 flex justify-between items-center top-nav">
+        <a href="#" class="text-2xl font-bold text-red-600">RA</a>
+        <div class="hidden md:flex items-center space-x-6 text-sm">
+            <a href="#" class="hover:text-gray-300">Home</a>
+            <a href="#experience" class="hover:text-gray-300">Experience</a>
+            <a href="#projects" class="hover:text-gray-300">Projects</a>
+            <a href="#skills" class="hover:text-gray-300">Skills</a>
+            <a href="#contact" class="hover:text-gray-300">Contact</a>
         </div>
-        <a href="#about" class="scroll-down-indicator" aria-label="Scroll down">
-            <div class="mouse"><div class="scroller"></div></div>
-        </a>
+    </nav>
+
+    <!-- Header Section -->
+    <header class="h-[80vh] md:h-[90vh] header-bg relative pt-16">
+        <div class="absolute inset-0 bg-black bg-opacity-50"></div>
+        <div class="relative z-10 flex flex-col justify-end h-full p-4 md:p-12 space-y-4">
+            <h1 class="text-5xl md:text-7xl font-extrabold text-white tracking-tighter">Rahul Arya</h1>
+            <p class="text-xl md:text-2xl text-gray-300 max-w-2xl">Economist & Data Scientist. Turning economic intuition into data-driven solutions with AI & Machine Learning.</p>
+            <div class="flex items-center space-x-4 flex-wrap gap-y-4">
+                <a href="#projects" class="px-8 py-3 bg-white text-black font-bold rounded hover:bg-gray-200 transition-colors">View Work</a>
+                <button id="ai-assistant-btn" class="px-8 py-3 bg-red-600 text-white font-bold rounded hover:bg-red-700 transition-colors">Ask My AI</button>
+                <a href="#contact" class="px-8 py-3 bg-transparent border-2 border-white text-white font-bold rounded hover:bg-white hover:text-black transition-colors">Contact Me</a>
+            </div>
+        </div>
     </header>
 
-    <main>
-        <!-- ABOUT SECTION -->
-        <section id="about" class="section container">
-            <h2 class="section-title reveal">About Me</h2>
-            <p class="reveal">
-               Turning economic intuition into data-driven solutions. I am an ML & AI Enthusiast, Data Analyst, and Researcher, blending economics with advanced analytics to guide better decisions.
-            </p>
-        </section>
+    <main class="py-12 px-4 md:px-12 space-y-16">
 
-        <!-- EXPERIENCE SECTION -->
-        <section id="experience" class="section container">
-            <h2 class="section-title reveal">Experience</h2>
-            <div class="timeline">
-                <div class="timeline-item left reveal">
-                    <div class="timeline-date">2025</div>
-                    <div class="timeline-content">
-                        <h3>Credit Risk Modelling Intern</h3>
-                        <h4>Central Bank of India</h4>
-                        <p>Developed ML models for credit risk, integrating banking domain knowledge (NPA, DPD) with feature engineering. Implemented end-to-end workflows and integrated Basel III and PAR metrics to ensure regulatory compliance.</p>
+        <!-- Professional Experience Section -->
+        <section id="experience">
+            <h3 class="category-title text-2xl font-bold mb-4">PROFESSIONAL EXPERIENCE</h3>
+            <div class="card-row-container">
+                <div class="flex space-x-4 overflow-x-auto pb-4 card-row">
+                    <div class="card w-72 bg-[#282828] rounded-lg overflow-hidden" data-title="Credit Risk Modelling Intern" data-description="Developed ML models for credit risk at the Central Bank of India, integrating banking domain knowledge (NPA, DPD) with advanced feature engineering. Implemented end-to-end workflows and integrated Basel III and PAR metrics to ensure regulatory compliance." data-image="https://images.unsplash.com/photo-1554260570-e9682a3418b8?q=80&w=2070&auto=format&fit=crop">
+                        <img src="https://images.unsplash.com/photo-1554260570-e9682a3418b8?q=80&w=2070&auto=format&fit=crop" alt="Financial Modelling" class="w-full h-40 object-cover">
+                        <div class="card-content p-4"><h4 class="font-bold text-lg">Central Bank of India</h4></div>
                     </div>
-                </div>
-                <div class="timeline-item right reveal">
-                    <div class="timeline-date">2024</div>
-                    <div class="timeline-content">
-                        <h3>Product Manager Intern</h3>
-                        <h4>Beyondriffs</h4>
-                        <p>Led initiatives boosting user engagement by 18%. Refined project roadmaps, fostered team collaboration, and spearheaded market research with 250+ users to drive data-informed product decisions.</p>
+                    <div class="card w-72 bg-[#282828] rounded-lg overflow-hidden" data-title="Product Manager Intern" data-description="Led initiatives boosting user engagement by 18% at Beyondriffs. Refined project roadmaps, fostered team collaboration, and spearheaded market research with over 250 users to drive data-informed product decisions." data-image="https://images.unsplash.com/photo-1556761175-b413da4baf72?q=80&w=1974&auto=format&fit=crop">
+                        <img src="https://images.unsplash.com/photo-1556761175-b413da4baf72?q=80&w=1974&auto=format&fit=crop" alt="Tech Company" class="w-full h-40 object-cover">
+                        <div class="card-content p-4"><h4 class="font-bold text-lg">Beyondriffs (Product)</h4></div>
                     </div>
-                </div>
-                <div class="timeline-item left reveal">
-                    <div class="timeline-date">2024</div>
-                    <div class="timeline-content">
-                        <h3>Marketing Intern</h3>
-                        <h4>Beyondriffs</h4>
-                        <p>Utilized insights from 100+ surveys to develop customer-centric marketing strategies. Built compelling product narratives and value propositions to support sales and marketing campaigns.</p>
+                    <div class="card w-72 bg-[#282828] rounded-lg overflow-hidden" data-title="Marketing Intern" data-description="Utilized insights from over 100 surveys to develop customer-centric marketing strategies at Beyondriffs. Built compelling product narratives and value propositions to support sales and marketing campaigns." data-image="https://images.unsplash.com/photo-1557804506-669a67965ba0?q=80&w=1974&auto=format&fit=crop">
+                        <img src="https://images.unsplash.com/photo-1557804506-669a67965ba0?q=80&w=1974&auto=format&fit=crop" alt="Marketing Strategy" class="w-full h-40 object-cover">
+                        <div class="card-content p-4"><h4 class="font-bold text-lg">Beyondriffs (Marketing)</h4></div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- PROJECTS SECTION -->
-        <section id="projects" class="section container">
-            <h2 class="section-title reveal">Academic Projects</h2>
-            <div class="projects-grid">
-                <div class="project-card reveal">
-                    <div class="project-card-content">
-                        <h3>Farmer Income Prediction Model</h3>
-                        <p>Developed an L&T Finance model integrating diverse data to predict farmer income. Engineered features, tuned an XGBoost+LightGBM+Ridge ensemble, and deployed a REST API to enable data-driven credit decisions.</p>
+        <!-- Projects Section -->
+        <section id="projects">
+            <h3 class="category-title text-2xl font-bold mb-4">FEATURED PROJECTS</h3>
+            <div class="card-row-container">
+                <div class="flex space-x-4 overflow-x-auto pb-4 card-row">
+                     <div class="card w-72 bg-[#282828] rounded-lg overflow-hidden" data-title="Farmer Income Prediction" data-description="Developed a model integrating demographic, agronomic, climatic, and market data, achieving an R² of 0.7513 with an XGBoost+LightGBM ensemble." data-image="https://images.unsplash.com/photo-1560493676-04071c5f467b?q=80&w=1974&auto=format&fit=crop" data-link="https://rahularya014.github.io/Farmer-income-Demo/">
+                        <img src="https://images.unsplash.com/photo-1560493676-04071c5f467b?q=80&w=1974&auto=format&fit=crop" alt="Farmer examining crops" class="w-full h-40 object-cover">
+                        <div class="card-content p-4"><h4 class="font-bold text-lg">Farmer Income Prediction</h4></div>
                     </div>
-                    <div class="project-card-footer">
-                        <button class="ai-summarize-btn">Summarize with AI</button>
-                        <a href="https://rahularya014.github.io/Farmer-income-Demo/" target="_blank" rel="noopener noreferrer" class="view-project-btn">Preview</a>
+                    <div class="card w-72 bg-[#282828] rounded-lg overflow-hidden" data-title="AMEX Offer Engagement Forecasting" data-description="Achieved AIR 422 in the AMEX Campus Challenge. Engineered 400+ features and built an optimized XGB+LGBM model (AUC 0.82, 78% precision). Designed Click Momentum and adaptive time-decay features, boosting performance by 15%." data-image="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2070&auto=format&fit=crop" data-link="https://rahularya014.github.io/Predictive-Modeling-for-Customer-Engagement-with-Offers-using-AMEX-Data-/">
+                        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2070&auto=format&fit=crop" alt="Data Science Analyst Dashboard" class="w-full h-40 object-cover">
+                        <div class="card-content p-4"><h4 class="font-bold text-lg">AMEX Offer Engagement</h4></div>
                     </div>
-                </div>
-                <div class="project-card reveal">
-                    <div class="project-card-content">
-                        <h3>AMEX Customer Engagement Model</h3>
-                        <p>Created a scalable Dask pipeline to personalize offers for 370K+ users. Built an XGB+LGBM+CatBoost ensemble with custom features like Click Momentum, boosting performance by 15%.</p>
+                     <div class="card w-72 bg-[#282828] rounded-lg overflow-hidden" data-title="Credit Card Fraud Detection" data-description="Designed a Keras autoencoder on over 227K transactions, achieving a ROC-AUC of 0.95 for anomaly detection. Also built a Sklearn pipeline with 93.4% test accuracy." data-image="https://images.unsplash.com/photo-1563013544-824ae1b704d3?q=80&w=2070&auto=format&fit=crop" data-link="#">
+                        <img src="https://images.unsplash.com/photo-1563013544-824ae1b704d3?q=80&w=2070&auto=format&fit=crop" alt="Credit Card Fraud Detection" class="w-full h-40 object-cover">
+                        <div class="card-content p-4"><h4 class="font-bold text-lg">Credit Card Fraud Detection</h4></div>
                     </div>
-                     <div class="project-card-footer">
-                        <button class="ai-summarize-btn">Summarize with AI</button>
-                        <a href="https://rahularya014.github.io/Predictive-Modeling-for-Customer-Engagement-with-Offers-using-AMEX-Data-/" target="_blank" rel="noopener noreferrer" class="view-project-btn">Preview</a>
+                     <div class="card w-72 bg-[#282828] rounded-lg overflow-hidden" data-title="AI-Powered Supply Chain Analytics" data-description="Automated a full ETL pipeline using N8N. Leveraged Quadratic AI for prompt-based KPI computation, auto-generating SQL logic and visual insights to accelerate decision-making." data-image="https://images.unsplash.com/photo-1578575437130-527eed3abbec?q=80&w=2070&auto=format&fit=crop" data-link="#">
+                        <img src="https://images.unsplash.com/photo-1578575437130-527eed3abbec?q=80&w=2070&auto=format&fit=crop" alt="Supply Chain Logistics" class="w-full h-40 object-cover">
+                        <div class="card-content p-4"><h4 class="font-bold text-lg">AI Supply Chain Analytics</h4></div>
                     </div>
-                </div>
-                <div class="project-card reveal">
-                     <div class="project-card-content">
-                        <h3>AI-Powered Supply Chain Analytics</h3>
-                        <p>Automated a full ETL pipeline using N8N. Leveraged Quadratic AI for prompt-based KPI computation, auto-generating SQL logic and visual insights to accelerate decision-making.</p>
-                    </div>
-                    <div class="project-card-footer">
-                        <button class="ai-summarize-btn">Summarize with AI</button>
-                    </div>
-                </div>
-                <div class="project-card reveal">
-                    <div class="project-card-content">
-                        <h3>Credit Card Fraud Detection</h3>
-                        <p>Designed a Keras autoencoder on 227K+ transactions, achieving a ROC-AUC of 0.95 for anomaly detection. Also built a Sklearn pipeline with 93.4% test accuracy.</p>
-                    </div>
-                    <div class="project-card-footer">
-                        <button class="ai-summarize-btn">Summarize with AI</button>
-                    </div>
-                </div>
-                <div class="project-card reveal">
-                    <div class="project-card-content">
-                        <h3>Causes of Death in India (1950-2019)</h3>
-                        <p>Analyzed 30 years of data using OLS linear regression to study the impact of various health and social factors on death rates, achieving a high R² of 0.8959.</p>
-                    </div>
-                    <div class="project-card-footer">
-                        <button class="ai-summarize-btn">Summarize with AI</button>
-                    </div>
-                </div>
-                <div class="project-card reveal">
-                    <div class="project-card-content">
-                        <h3>Economic & Crime Analysis</h3>
-                        <p>Conducted analyses on the economic impact of COVID-19 on the Indian economy and a separate study on U.S. crime rates using a rational choice model and time series analysis.</p>
-                    </div>
-                    <div class="project-card-footer">
-                        <button class="ai-summarize-btn">Summarize with AI</button>
+                     <div class="card w-72 bg-[#282828] rounded-lg overflow-hidden" data-title="Impact of COVID-19 on Indian Economy" data-description="Analyzed secondary data on COVID-19's economic impact, noting a 23.9% GDP drop in Q1 2020-21 and a significant 37% export decline." data-image="https://images.unsplash.com/photo-1584036561566-baf8f5f1b144?q=80&w=2070&auto=format&fit=crop" data-link="#">
+                        <img src="https://images.unsplash.com/photo-1584036561566-baf8f5f1b144?q=80&w=2070&auto=format&fit=crop" alt="Stock market graph during pandemic" class="w-full h-40 object-cover">
+                        <div class="card-content p-4"><h4 class="font-bold text-lg">COVID-19 Economic Impact</h4></div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- EDUCATION SECTION -->
-        <section id="education" class="section container">
-            <h2 class="section-title reveal">Education</h2>
-            <div class="timeline">
-                <div class="timeline-item left reveal">
-                    <div class="timeline-date">2024 - 2026</div>
-                    <div class="timeline-content">
-                        <h3>M.A. Economics</h3>
-                        <h4>Delhi School of Economics</h4>
+         <!-- Education Section -->
+        <section id="education">
+            <h3 class="category-title text-2xl font-bold mb-4">EDUCATION</h3>
+            <div class="card-row-container">
+                <div class="flex space-x-4 overflow-x-auto pb-4 card-row">
+                    <div class="card w-72 bg-[#282828] rounded-lg overflow-hidden" data-title="M.A. Economics" data-description="Currently pursuing a Master's degree in Economics from one of India's premier institutions, focusing on advanced economic theory, econometrics, and quantitative analysis." data-image="https://images.unsplash.com/photo-1606761568499-6d2451b23c66?q=80&w=1974&auto=format&fit=crop">
+                        <img src="https://images.unsplash.com/photo-1606761568499-6d2451b23c66?q=80&w=1974&auto=format&fit=crop" alt="Delhi School of Economics Campus" class="w-full h-40 object-cover">
+                        <div class="card-content p-4"><h4 class="font-bold text-lg">Delhi School of Economics</h4></div>
                     </div>
-                </div>
-                <div class="timeline-item right reveal">
-                    <div class="timeline-date">2020 - 2023</div>
-                    <div class="timeline-content">
-                        <h3>B.A. (H) Economics</h3>
-                        <h4>Satyawati College, University of Delhi</h4>
+                     <div class="card w-72 bg-[#282828] rounded-lg overflow-hidden" data-title="B.A. (H) Economics" data-description="Graduated with a Bachelor's degree in Economics, building a strong foundation in microeconomics, macroeconomics, statistics, and mathematical methods for economics." data-image="https://images.unsplash.com/photo-1562774053-701939374585?q=80&w=2086&auto=format&fit=crop">
+                        <img src="https://images.unsplash.com/photo-1562774053-701939374585?q=80&w=2086&auto=format&fit=crop" alt="University College" class="w-full h-40 object-cover">
+                        <div class="card-content p-4"><h4 class="font-bold text-lg">University of Delhi</h4></div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- SKILLS SECTION -->
-        <section id="skills" class="section container">
-            <h2 class="section-title reveal">Skills & Certifications</h2>
-            <div class="skills-container">
-                <div class="skill-category reveal">
-                    <h3>Technical Skills</h3>
-                    <div class="skills-list">
-                        <span class="skill-item">Python</span>
-                        <span class="skill-item">MySQL</span>
-                        <span class="skill-item">Data Analysis</span>
-                        <span class="skill-item">Power BI</span>
-                        <span class="skill-item">MS Excel</span>
-                        <span class="skill-item">Machine Learning</span>
-                        <span class="skill-item">XGBoost</span>
-                        <span class="skill-item">LightGBM</span>
-                        <span class="skill-item">Scikit-learn</span>
-                        <span class="skill-item">Keras</span>
-                        <span class="skill-item">Dask</span>
+        <!-- Skills Section -->
+        <section id="skills">
+            <h3 class="category-title text-2xl font-bold mb-4">SKILLS</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div>
+                    <h4 class="text-xl font-semibold mb-3 text-gray-300">Technical Skills</h4>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="skill-tag bg-gray-700 text-gray-200 px-3 py-1 rounded-full">Python</span>
+                        <span class="skill-tag bg-gray-700 text-gray-200 px-3 py-1 rounded-full">MySQL</span>
+                        <span class="skill-tag bg-gray-700 text-gray-200 px-3 py-1 rounded-full">Data Analysis</span>
+                        <span class="skill-tag bg-gray-700 text-gray-200 px-3 py-1 rounded-full">Power BI</span>
+                        <span class="skill-tag bg-gray-700 text-gray-200 px-3 py-1 rounded-full">MS Excel</span>
+                        <span class="skill-tag bg-gray-700 text-gray-200 px-3 py-1 rounded-full">Machine Learning</span>
+                        <span class="skill-tag bg-gray-700 text-gray-200 px-3 py-1 rounded-full">XGBoost</span>
+                        <span class="skill-tag bg-gray-700 text-gray-200 px-3 py-1 rounded-full">LightGBM</span>
+                        <span class="skill-tag bg-gray-700 text-gray-200 px-3 py-1 rounded-full">Scikit-learn</span>
+                        <span class="skill-tag bg-gray-700 text-gray-200 px-3 py-1 rounded-full">Keras</span>
+                        <span class="skill-tag bg-gray-700 text-gray-200 px-3 py-1 rounded-full">Dask</span>
                     </div>
                 </div>
-                <div class="skill-category reveal">
-                    <h3>Interpersonal Skills</h3>
-                    <div class="skills-list">
-                        <span class="skill-item">Leadership</span>
-                        <span class="skill-item">Teamwork</span>
-                        <span class="skill-item">Problem-Solving</span>
-                        <span class="skill-item">Adaptability</span>
-                        <span class="skill-item">Quick Learner</span>
-                        <span class="skill-item">Enthusiastic</span>
-                    </div>
-                </div>
-                <div class="skill-category reveal">
-                    <h3>Certifications</h3>
-                    <div class="skills-list">
-                         <span class="skill-item">Data Analysis by Microsoft & LinkedIn</span>
-                         <span class="skill-item">Power BI Visualization</span>
-                         <span class="skill-item">MySQL 5.6 Database Administrator</span>
-                         <span class="skill-item">Python for beginners</span>
+                <div>
+                    <h4 class="text-xl font-semibold mb-3 text-gray-300">Interpersonal Skills</h4>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="skill-tag bg-gray-700 text-gray-200 px-3 py-1 rounded-full">Leadership</span>
+                        <span class="skill-tag bg-gray-700 text-gray-200 px-3 py-1 rounded-full">Teamwork</span>
+                        <span class="skill-tag bg-gray-700 text-gray-200 px-3 py-1 rounded-full">Problem-Solving</span>
+                        <span class="skill-tag bg-gray-700 text-gray-200 px-3 py-1 rounded-full">Adaptability</span>
+                        <span class="skill-tag bg-gray-700 text-gray-200 px-3 py-1 rounded-full">Quick Learner</span>
                     </div>
                 </div>
             </div>
         </section>
-        
-        <!-- CONTACT SECTION -->
-        <section id="contact" class="section container">
-            <h2 class="section-title reveal">Get In Touch</h2>
-            <p class="reveal">I'm always open to discussing new projects, creative ideas, or opportunities to be part of an ambitious vision. Feel free to reach out.</p>
-            <div class="magnetic-btn reveal">
-                <a href="mailto:rahularyajii2002@gmail.com" class="cta-button">Say Hello</a>
-            </div>
-        </section>
+
     </main>
-
-    <footer>
-        <div class="container">
-            <div class="social-links">
-                 <a href="mailto:rahularyajii2002@gmail.com" title="Email" target="_blank">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+    
+    <!-- Footer Section -->
+    <footer id="contact" class="py-12 px-4 md:px-12 border-t border-gray-800">
+        <div class="max-w-4xl mx-auto text-center">
+            <h3 class="text-3xl font-bold mb-4">Get In Touch</h3>
+            <p class="text-gray-400 max-w-xl mx-auto mb-8">I'm currently open to new opportunities. Feel free to reach out for collaborations or just a friendly chat.</p>
+            <div class="flex justify-center items-center space-x-6 mb-8">
+                <a href="mailto:rahularyajii2002@gmail.com" class="text-gray-400 hover:text-white transition-colors" title="Email">
+                    <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M22 6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6zm-2 0l-8 5-8-5h16zm0 12H4V8l8 5 8-5v10z"/></svg>
                 </a>
-                 <a href="https://www.linkedin.com/in/rahul-arya-034214221" title="LinkedIn" target="_blank">
-                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+                <a href="https://www.linkedin.com/in/rahul-arya-034214221" target="_blank" class="text-gray-400 hover:text-white transition-colors" title="LinkedIn">
+                    <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
                 </a>
-                 <a href="https://github.com/rahularya014" title="GitHub" target="_blank">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
-                </a>
-                 <a href="https://www.instagram.com/rahularya014" title="Instagram" target="_blank">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                <a href="https://github.com/rahularya014" target="_blank" class="text-gray-400 hover:text-white transition-colors" title="GitHub">
+                    <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
                 </a>
             </div>
-            <p>&copy; 2024 Rahul Arya. Designed with passion.</p>
+             <a href="#" class="inline-block px-8 py-3 bg-red-600 text-white font-bold rounded hover:bg-red-700 transition-colors">Download Resume</a>
+             <p class="text-gray-500 mt-8">&copy; 2024 Rahul Arya. All Rights Reserved.</p>
         </div>
     </footer>
 
-    <!-- AI Summary Modal -->
-    <div id="ai-summary-modal" class="modal-overlay">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 id="modal-title">AI-Powered Summary</h3>
-                <button id="close-modal-btn" class="close-modal">&times;</button>
+    <!-- Project Detail Modal -->
+    <div id="project-modal" class="modal fixed inset-0 bg-black bg-opacity-70 z-50 flex items-center justify-center p-4 hidden opacity-0">
+        <div class="bg-[#181818] rounded-lg max-w-2xl w-full overflow-hidden">
+            <div class="relative">
+                <img id="modal-image" src="" alt="Project Image" class="w-full h-64 object-cover">
+                <button id="close-project-modal" class="absolute top-2 right-2 text-white bg-black bg-opacity-50 rounded-full p-2 text-2xl leading-none">&times;</button>
             </div>
-            <div id="modal-body">
-                <!-- AI content will be injected here -->
+            <div class="p-6">
+                <h3 id="modal-title" class="text-2xl font-bold mb-2"></h3>
+                <p id="modal-description" class="text-gray-300 mb-4"></p>
+                <a id="modal-link" href="#" target="_blank" class="inline-block px-6 py-2 bg-red-600 text-white font-bold rounded hover:bg-red-700 transition-colors">View Project</a>
             </div>
         </div>
     </div>
 
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    // --- IMPORTANT: ADD YOUR GEMINI API KEY HERE ---
-    const API_KEY = "AIzaSyApKgS7FuiwUB2GDTEU8nKDj0Pv9fWS3a0";
+    <!-- AI Assistant Modal -->
+    <div id="ai-modal" class="modal fixed inset-0 bg-black bg-opacity-70 z-50 flex items-center justify-center p-4 hidden opacity-0">
+        <div class="bg-[#181818] rounded-lg max-w-lg w-full flex flex-col h-[70vh]">
+            <div class="p-4 border-b border-gray-700 flex justify-between items-center">
+                <h3 class="text-xl font-bold">Rahul's AI Assistant</h3>
+                <button id="close-ai-modal" class="text-white text-2xl">&times;</button>
+            </div>
+            <div id="ai-chat-box" class="flex-grow p-4 overflow-y-auto space-y-4">
+                <div class="ai-chat-bubble p-3 bg-gray-700 rounded-lg max-w-xs">
+                    <p>Hello! Ask me anything about Rahul's skills, projects, or experience.</p>
+                </div>
+            </div>
+            <div class="p-4 border-t border-gray-700 flex items-center">
+                <input type="text" id="ai-input" class="flex-grow bg-gray-700 rounded-l-md p-3 focus:outline-none" placeholder="e.g., 'What are his main technical skills?'">
+                <button id="ai-send-btn" class="bg-red-600 text-white font-bold px-6 py-3 rounded-r-md">Send</button>
+            </div>
+        </div>
+    </div>
 
-    // --- PARTICLE CANVAS ANIMATION ---
-    const canvas = document.getElementById('particle-canvas');
-    const ctx = canvas.getContext('2d');
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
 
-    let particlesArray;
-
-    const mouse = {
-        x: null,
-        y: null,
-        radius: (canvas.height / 100) * (canvas.width / 100)
-    };
-
-    window.addEventListener('mousemove', (event) => {
-        mouse.x = event.x;
-        mouse.y = event.y;
-    });
-
-    class Particle {
-        constructor(x, y, directionX, directionY, size, color) {
-            this.x = x;
-            this.y = y;
-            this.directionX = directionX;
-            this.directionY = directionY;
-            this.size = size;
-            this.color = color;
-        }
-
-        draw() {
-            ctx.beginPath();
-            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false);
-            ctx.fillStyle = 'rgba(0, 240, 255, 0.2)';
-            ctx.fill();
-        }
-
-        update() {
-            if (this.x > canvas.width || this.x < 0) {
-                this.directionX = -this.directionX;
-            }
-            if (this.y > canvas.height || this.y < 0) {
-                this.directionY = -this.directionY;
-            }
-
-            let dx = mouse.x - this.x;
-            let dy = mouse.y - this.y;
-            let distance = Math.sqrt(dx * dx + dy * dy);
-            if (distance < mouse.radius + this.size) {
-                if (mouse.x < this.x && this.x < canvas.width - this.size * 10) { this.x += 5; }
-                if (mouse.x > this.x && this.x > this.size * 10) { this.x -= 5; }
-                if (mouse.y < this.y && this.y < canvas.height - this.size * 10) { this.y += 5; }
-                if (mouse.y > this.y && this.y > this.size * 10) { this.y -= 5; }
-            }
-
-            this.x += this.directionX;
-            this.y += this.directionY;
-            this.draw();
-        }
-    }
-
-    function initParticles() {
-        particlesArray = [];
-        let numberOfParticles = (canvas.height * canvas.width) / 9000;
-        for (let i = 0; i < numberOfParticles; i++) {
-            let size = (Math.random() * 2) + 1;
-            let x = (Math.random() * ((innerWidth - size * 2) - (size * 2)) + size * 2);
-            let y = (Math.random() * ((innerHeight - size * 2) - (size * 2)) + size * 2);
-            let directionX = (Math.random() * 0.4) - 0.2;
-            let directionY = (Math.random() * 0.4) - 0.2;
-            let color = 'rgba(0, 240, 255, 0.2)';
-            particlesArray.push(new Particle(x, y, directionX, directionY, size, color));
-        }
-    }
-
-    function connectParticles() {
-        let opacityValue = 1;
-        for (let a = 0; a < particlesArray.length; a++) {
-            for (let b = a; b < particlesArray.length; b++) {
-                let distance = ((particlesArray[a].x - particlesArray[b].x) * (particlesArray[a].x - particlesArray[b].x)) +
-                    ((particlesArray[a].y - particlesArray[b].y) * (particlesArray[a].y - particlesArray[b].y));
-                if (distance < (canvas.width / 7) * (canvas.height / 7)) {
-                    opacityValue = 1 - (distance / 20000);
-                    ctx.strokeStyle = `rgba(0, 240, 255, ${opacityValue * 0.15})`;
-                    ctx.lineWidth = 1;
-                    ctx.beginPath();
-                    ctx.moveTo(particlesArray[a].x, particlesArray[a].y);
-                    ctx.lineTo(particlesArray[b].x, particlesArray[b].y);
-                    ctx.stroke();
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Navbar scroll effect
+            const nav = document.getElementById('top-nav');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    nav.classList.add('scrolled');
+                } else {
+                    nav.classList.remove('scrolled');
                 }
-            }
-        }
-    }
-
-    function animateParticles() {
-        requestAnimationFrame(animateParticles);
-        ctx.clearRect(0, 0, innerWidth, innerHeight);
-        for (let i = 0; i < particlesArray.length; i++) {
-            particlesArray[i].update();
-        }
-        connectParticles();
-    }
-
-    window.addEventListener('resize', () => {
-        canvas.width = innerWidth;
-        canvas.height = innerHeight;
-        mouse.radius = (canvas.height / 100) * (canvas.width / 100);
-        initParticles();
-    });
-    window.addEventListener('mouseout', () => { mouse.x = undefined; mouse.y = undefined; });
-
-    initParticles();
-    animateParticles();
-
-    // --- TYPING EFFECT ---
-    const typingTextElement = document.getElementById('typing-text');
-    const phrases = ["Economist", "Data Scientist", "Credit Risk Analyst", "Product Manager"];
-    let phraseIndex = 0;
-    let charIndex = 0;
-    let isDeleting = false;
-
-    function type() {
-        const currentPhrase = phrases[phraseIndex];
-        if (isDeleting) {
-            typingTextElement.textContent = currentPhrase.substring(0, charIndex - 1);
-            charIndex--;
-        } else {
-            typingTextElement.textContent = currentPhrase.substring(0, charIndex + 1);
-            charIndex++;
-        }
-        if (!isDeleting && charIndex === currentPhrase.length) {
-            setTimeout(() => isDeleting = true, 2000);
-        } else if (isDeleting && charIndex === 0) {
-            isDeleting = false;
-            phraseIndex = (phraseIndex + 1) % phrases.length;
-        }
-        const typeSpeed = isDeleting ? 100 : 150;
-        setTimeout(type, typeSpeed);
-    }
-    type();
-
-    // --- SCROLL REVEAL ANIMATION ---
-    const revealElements = document.querySelectorAll('.reveal');
-    const revealObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
-            }
-        });
-    }, { threshold: 0.1 });
-    revealElements.forEach(el => revealObserver.observe(el));
-
-    // --- 3D PROJECT CARD TILT & GLOW EFFECT ---
-    const projectCards = document.querySelectorAll('.project-card');
-    projectCards.forEach(card => {
-        card.addEventListener('mousemove', (e) => {
-            const rect = card.getBoundingClientRect();
-            
-            // Glow effect
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-            card.style.setProperty('--mouse-x', `${x}px`);
-            card.style.setProperty('--mouse-y', `${y}px`);
-
-            // Tilt effect (only if not hovering over the button)
-            if (e.target.classList.contains('ai-summarize-btn')) {
-                 card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
-                 return;
-            };
-            const { width, height } = rect;
-            const rotateX = (y / height - 0.5) * -15;
-            const rotateY = (x / width - 0.5) * 15;
-            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.03, 1.03, 1.03)`;
-        });
-
-        card.addEventListener('mouseleave', () => {
-            card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
-        });
-    });
-
-    // --- GEMINI API INTEGRATION ---
-    const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${API_KEY}`;
-    
-    async function callGeminiApi(prompt, outputEl, buttonEl) {
-        if (!API_KEY) {
-            outputEl.innerHTML = `<p style="color: #ff6b6b;">Error: API key is missing. Please add your Gemini API key to the script.</p>`;
-            if (buttonEl) buttonEl.disabled = false;
-            return;
-        }
-
-        if (buttonEl) buttonEl.disabled = true;
-        outputEl.innerHTML = `<div class="loading-spinner"></div>`;
-
-        try {
-            const payload = { contents: [{ parts: [{ text: prompt }] }] };
-            const response = await fetch(API_URL, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(payload)
             });
 
-            if (!response.ok) {
-                throw new Error(`API Error: ${response.status}`);
+
+            const projectCards = document.querySelectorAll('.card');
+            const projectModal = document.getElementById('project-modal');
+            const closeModalBtn = document.getElementById('close-project-modal');
+            
+            projectCards.forEach(card => {
+                card.addEventListener('click', () => {
+                    const title = card.dataset.title;
+                    const description = card.dataset.description;
+                    const image = card.dataset.image;
+                    const link = card.dataset.link;
+
+                    document.getElementById('modal-title').textContent = title;
+                    document.getElementById('modal-description').textContent = description;
+                    document.getElementById('modal-image').src = image;
+                    const modalLink = document.getElementById('modal-link');
+                    
+                    if (link && link !== '#') {
+                       modalLink.href = link;
+                       modalLink.style.display = 'inline-block';
+                    } else {
+                       modalLink.style.display = 'none';
+                    }
+
+                    projectModal.classList.remove('hidden');
+                    setTimeout(() => projectModal.classList.remove('opacity-0'), 10);
+                });
+            });
+
+            const closeProjectModal = () => {
+                projectModal.classList.add('opacity-0');
+                setTimeout(() => projectModal.classList.add('hidden'), 300);
+            };
+
+            closeModalBtn.addEventListener('click', closeProjectModal);
+            projectModal.addEventListener('click', (e) => {
+                if (e.target === projectModal) {
+                    closeProjectModal();
+                }
+            });
+
+            // AI Assistant Modal Logic
+            const aiModal = document.getElementById('ai-modal');
+            const openAiModalBtn = document.getElementById('ai-assistant-btn');
+            const closeAiModalBtn = document.getElementById('close-ai-modal');
+            const aiSendBtn = document.getElementById('ai-send-btn');
+            const aiInput = document.getElementById('ai-input');
+            const aiChatBox = document.getElementById('ai-chat-box');
+            
+            const apiKey = 'AIzaSyApKgS7FuiwUB2GDTEU8nKDj0Pv9fWS3a0';
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+
+            const openAiModal = () => {
+                aiModal.classList.remove('hidden');
+                setTimeout(() => aiModal.classList.remove('opacity-0'), 10);
+            }
+            
+            const closeAiModal = () => {
+                aiModal.classList.add('opacity-0');
+                setTimeout(() => aiModal.classList.add('hidden'), 300);
             }
 
-            const result = await response.json();
-            const text = result.candidates[0].content.parts[0].text;
-            outputEl.innerHTML = `<p>${text.replace(/\n/g, '<br>')}</p>`;
+            openAiModalBtn.addEventListener('click', openAiModal);
+            closeAiModalBtn.addEventListener('click', closeAiModal);
+            
+            const addMessageToChat = (message, sender) => {
+                const bubble = document.createElement('div');
+                bubble.classList.add('ai-chat-bubble', 'p-3', 'rounded-lg', 'max-w-md');
+                if (sender === 'user') {
+                    bubble.classList.add('bg-red-600', 'self-end', 'ml-auto');
+                } else {
+                    bubble.classList.add('bg-gray-700', 'self-start');
+                }
+                bubble.innerHTML = message; // Use innerHTML to render loading spinner
+                aiChatBox.appendChild(bubble);
+                aiChatBox.scrollTop = aiChatBox.scrollHeight;
+            };
 
-        } catch (error) {
-            console.error("Gemini API Error:", error);
-            outputEl.innerHTML = `<p style="color: #ff6b6b;">An error occurred. Please check the console for details.</p>`;
-        } finally {
-            if (buttonEl) buttonEl.disabled = false;
-        }
-    }
+            const handleAIChat = async () => {
+                const userQuery = aiInput.value.trim();
+                if (!userQuery) return;
 
-    // --- AI PROJECT SUMMARIZER ---
-    const modal = document.getElementById('ai-summary-modal');
-    const modalTitle = document.getElementById('modal-title');
-    const modalBody = document.getElementById('modal-body');
-    const closeModalBtn = document.getElementById('close-modal-btn');
-    
-    document.querySelectorAll('.ai-summarize-btn').forEach(button => {
-        button.addEventListener('click', (e) => {
-            const card = e.target.closest('.project-card');
-            const title = card.querySelector('h3').textContent;
-            const description = card.querySelector('p').textContent;
-            
-            modalTitle.textContent = `AI Summary: ${title}`;
-            modal.classList.add('visible');
-            
-            const prompt = `You are a tech recruiter reviewing a portfolio. Based on the following project, write a short, impressive summary (2-3 sentences) that highlights the key technical skills and business impact. Be concise and professional.
-            Project Title: "${title}"
-            Description: "${description}"`;
-            
-            callGeminiApi(prompt, modalBody, button);
+                addMessageToChat(`<p>${userQuery}</p>`, 'user');
+                aiInput.value = '';
+                addMessageToChat('<div class="loading-spinner"></div>', 'ai');
+
+                try {
+                    // Extract portfolio context
+                    const portfolioContext = `
+                        Name: Rahul Arya. 
+                        Roles: Economist, Data Scientist, ML Enthusiast.
+                        Experience: Credit Risk at Central Bank of India, Product Manager & Marketing Intern at Beyondriffs.
+                        Projects: Farmer Income Prediction, AMEX Customer Engagement, Credit Card Fraud Detection, AI Supply Chain Analytics, COVID-19 Economic Impact.
+                        Education: M.A. Economics from Delhi School of Economics, B.A. Economics from University of Delhi.
+                        Skills: Python, SQL, Power BI, ML (XGBoost, LightGBM, Keras), Dask, Leadership, Teamwork, Problem-Solving, Adaptability, Quick Learner.
+                    `;
+
+                    const systemPrompt = `You are a helpful AI assistant for Rahul Arya's portfolio. Your goal is to answer questions based ONLY on the provided context. Be friendly, professional, and concise. Do not invent information. If the answer is not in the context, say "I can only answer questions based on the information in this portfolio." Context: ${portfolioContext}`;
+                    
+                    const payload = {
+                        contents: [{ parts: [{ text: userQuery }] }],
+                        systemInstruction: { parts: [{ text: systemPrompt }] },
+                    };
+
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+
+                    if (!response.ok) {
+                        throw new Error(`API error: ${response.statusText}`);
+                    }
+
+                    const result = await response.json();
+                    const aiResponse = result.candidates[0].content.parts[0].text;
+                    
+                    // Remove loading spinner and add final response
+                    const loadingBubble = aiChatBox.querySelector('.loading-spinner').parentElement;
+                    loadingBubble.innerHTML = `<p>${aiResponse}</p>`;
+                    aiChatBox.scrollTop = aiChatBox.scrollHeight;
+
+
+                } catch (error) {
+                    const loadingBubble = aiChatBox.querySelector('.loading-spinner').parentElement;
+                    loadingBubble.innerHTML = `<p>Sorry, I'm having trouble connecting right now. Please try again later.</p>`;
+                    console.error('AI Chat Error:', error);
+                }
+            };
+
+            aiSendBtn.addEventListener('click', handleAIChat);
+            aiInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    handleAIChat();
+                }
+            });
         });
-    });
-
-    closeModalBtn.addEventListener('click', () => modal.classList.remove('visible'));
-    modal.addEventListener('click', (e) => {
-        if (e.target === modal) {
-            modal.classList.remove('visible');
-        }
-    });
-    
-    // --- MAGNETIC BUTTON ---
-    const magneticBtn = document.querySelector('.magnetic-btn');
-    const btnText = magneticBtn.querySelector('.cta-button');
-
-    magneticBtn.addEventListener('mousemove', (e) => {
-        const rect = magneticBtn.getBoundingClientRect();
-        const x = e.clientX - rect.left - rect.width / 2;
-        const y = e.clientY - rect.top - rect.height / 2;
-
-        btnText.style.transform = `translate(${x * 0.3}px, ${y * 0.5}px)`;
-    });
-
-    magneticBtn.addEventListener('mouseleave', () => {
-        btnText.style.transform = 'translate(0,0)';
-    });
-
-});
-</script>
+    </script>
 </body>
 </html>
+
+
