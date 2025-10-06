@@ -128,6 +128,16 @@
                 display: none; /* Hide nav links, could be replaced with hamburger */
             }
         }
+        
+        /* Shake and fall effect */
+        .fall-item {
+            transition: transform 1s cubic-bezier(0.68, -0.55, 0.27, 1.55), opacity 0.8s ease-out;
+        }
+        .fall-effect {
+            transform: translateY(120vh) rotate(10deg) scale(0.8);
+            opacity: 0;
+            pointer-events: none;
+        }
 
     </style>
 </head>
@@ -547,6 +557,90 @@
             document.querySelectorAll('.reveal').forEach(el => {
                 observer.observe(el);
             });
+            
+             // --- SHAKE TO FALL FEATURE ---
+            const shakeThreshold = 25;
+            let lastX, lastY, lastZ;
+            let lastShakeTime = 0;
+            const shakeCooldown = 5000; // 5 seconds cooldown to prevent spam
+            let isFallen = false;
+            let motionPermissionGranted = false;
+
+            const fallItems = document.querySelectorAll('header, main > section, footer');
+            fallItems.forEach(item => item.classList.add('fall-item'));
+
+            function handleMotionEvent(event) {
+                const currentTime = new Date().getTime();
+                if ((currentTime - lastShakeTime) < shakeCooldown || isFallen) {
+                    return;
+                }
+
+                const acceleration = event.accelerationIncludingGravity;
+                if (!acceleration || !acceleration.x) { return; }
+
+                const currentX = acceleration.x;
+                const currentY = acceleration.y;
+                const currentZ = acceleration.z;
+
+                if (lastX !== undefined) {
+                    const deltaX = Math.abs(lastX - currentX);
+                    const deltaY = Math.abs(lastY - currentY);
+                    const deltaZ = Math.abs(lastZ - currentZ);
+
+                    if ((deltaX + deltaY + deltaZ) > shakeThreshold) {
+                        lastShakeTime = currentTime;
+                        triggerFall();
+                    }
+                }
+                lastX = currentX;
+                lastY = currentY;
+                lastZ = currentZ;
+            }
+
+            function triggerFall() {
+                isFallen = true;
+                fallItems.forEach(item => {
+                    item.classList.add('fall-effect');
+                });
+                setTimeout(resetFall, 2000);
+            }
+
+            function resetFall() {
+                fallItems.forEach((item, index) => {
+                    item.style.transitionDelay = `${index * 0.15}s`;
+                    item.classList.remove('fall-effect');
+                });
+                const totalAnimationTime = 2000 + fallItems.length * 150;
+                setTimeout(() => {
+                    fallItems.forEach(item => {
+                        item.style.transitionDelay = '';
+                    });
+                    isFallen = false;
+                }, totalAnimationTime);
+            }
+
+            function requestMotionPermission() {
+                 if (motionPermissionGranted || typeof DeviceMotionEvent.requestPermission !== 'function') {
+                    return;
+                }
+                DeviceMotionEvent.requestPermission()
+                    .then(permissionState => {
+                        if (permissionState === 'granted') {
+                            window.addEventListener('devicemotion', handleMotionEvent);
+                            motionPermissionGranted = true;
+                        }
+                    })
+                    .catch(console.error);
+            }
+
+            // Attempt to get permission on first user interaction
+            document.body.addEventListener('click', requestMotionPermission, { once: true });
+            
+            // For non-iOS devices that don't need explicit permission
+            if (window.DeviceMotionEvent && typeof DeviceMotionEvent.requestPermission !== 'function') {
+                window.addEventListener('devicemotion', handleMotionEvent);
+            }
+
         });
     </script>
 </body>
