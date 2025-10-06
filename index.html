@@ -129,14 +129,97 @@
             }
         }
         
-        /* UPDATED: Shake effect CSS */
+        /* Shake effect CSS */
         .shake-item {
             transition: transform 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        
+        /* Shake Toast Notification */
+        #shake-toast {
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+        #shake-toast.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* AI Robot Animation */
+        .ai-robot {
+            position: relative;
+            width: 40px;
+            height: 50px;
+            animation: bob 2s infinite ease-in-out;
+            flex-shrink: 0;
+        }
+        .ai-robot .head {
+            width: 40px;
+            height: 30px;
+            background-color: #E50914; /* Netflix Red */
+            border-radius: 20px 20px 8px 8px;
+            position: relative;
+            overflow: hidden;
+        }
+        .ai-robot .eye {
+            width: 6px;
+            height: 8px;
+            background-color: white;
+            border-radius: 50%;
+            position: absolute;
+            top: 12px;
+            animation: blink 3s infinite;
+        }
+        .ai-robot .eye.left { left: 8px; }
+        .ai-robot .eye.right { right: 8px; }
+
+        .ai-robot .mouth {
+            width: 15px;
+            height: 2px;
+            background-color: white;
+            position: absolute;
+            bottom: 8px;
+            left: 12.5px;
+            border-radius: 1px;
+        }
+        .ai-robot .body {
+            width: 30px;
+            height: 20px;
+            background-color: #a0a0a0;
+            border-radius: 8px 8px 15px 15px;
+            position: absolute;
+            bottom: 0;
+            left: 5px;
+        }
+        
+        @keyframes bob {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+        @keyframes blink {
+            0%, 90%, 100% { transform: scaleY(1); }
+            95% { transform: scaleY(0.1); }
         }
 
     </style>
 </head>
 <body class="bg-[#141414]">
+
+    <!-- Shake Message Toast -->
+    <div id="shake-toast" class="fixed bottom-5 right-5 bg-gray-800 border border-red-500 text-white p-4 rounded-lg shadow-lg flex items-center gap-4 z-50 opacity-0 pointer-events-none">
+        <div class="ai-robot">
+            <div class="head">
+                <div class="eye left"></div>
+                <div class="eye right"></div>
+                <div class="mouth"></div>
+            </div>
+            <div class="body"></div>
+        </div>
+        <div>
+            <p class="font-bold">Please don't shake the phone!</p>
+            <p class="text-sm text-gray-300">The network is a bit slow, please wait.</p>
+        </div>
+    </div>
+
 
     <!-- Top Navigation -->
     <nav id="top-nav" class="fixed top-0 left-0 right-0 z-40 p-4 md:px-12 flex justify-between items-center top-nav">
@@ -338,7 +421,8 @@
             
             // Header background parallax effect
             const header = document.querySelector('.header-bg');
-            if (window.innerWidth > 768) { // Only apply on desktop
+            // This effect is best on desktop. It is disabled on smaller screens via the media query in CSS.
+            if (window.innerWidth > 768) {
                 window.addEventListener('mousemove', (e) => {
                     const { clientX, clientY } = e;
                     const x = (clientX / window.innerWidth - 0.5) * 40; // Intensity
@@ -552,13 +636,14 @@
                 observer.observe(el);
             });
             
-             // --- UPDATED: SHAKE TO DISALIGN FEATURE ---
-            const shakeThreshold = 15; // Made it a bit more sensitive
+             // --- SHAKE FEATURE ---
+            const shakeThreshold = 15;
             let lastX, lastY, lastZ;
             let lastShakeTime = 0;
-            const shakeCooldown = 5000; // 5 seconds cooldown
+            const shakeCooldown = 5000; // 5 seconds
             let isShaken = false;
             let motionPermissionGranted = false;
+            const shakeToast = document.getElementById('shake-toast');
 
             const shakeItems = document.querySelectorAll('header, main > section, footer');
             shakeItems.forEach(item => item.classList.add('shake-item'));
@@ -593,28 +678,38 @@
 
             function triggerShake() {
                 isShaken = true;
+                
+                // Show the toast message
+                shakeToast.classList.add('visible');
+
+                // Disalign items
                 shakeItems.forEach(item => {
-                    const x = (Math.random() - 0.5) * 60; // Random horizontal shift (-30px to 30px)
-                    const y = (Math.random() - 0.5) * 60; // Random vertical shift (-30px to 30px)
-                    const rot = (Math.random() - 0.5) * 10; // Random rotation (-5deg to 5deg)
+                    const x = (Math.random() - 0.5) * 40;
+                    const y = (Math.random() - 0.5) * 40;
+                    const rot = (Math.random() - 0.5) * 8;
                     item.style.transform = `translate(${x}px, ${y}px) rotate(${rot}deg)`;
                 });
-                setTimeout(resetShake, 2000); // Wait 2 seconds before smoothly resetting
+
+                // Set timer to hide toast and reset positions
+                setTimeout(resetShake, 3000); // Wait 3 seconds
             }
 
             function resetShake() {
+                // Hide the toast message
+                shakeToast.classList.remove('visible');
+                
+                // Reset item positions
                 shakeItems.forEach((item, index) => {
-                    // Stagger the return animation for a nice effect
                     item.style.transitionDelay = `${index * 0.1}s`; 
                     item.style.transform = 'translate(0, 0) rotate(0deg)';
                 });
 
-                const totalAnimationTime = 2000 + shakeItems.length * 100;
+                const totalAnimationTime = 1000 + shakeItems.length * 100;
                 setTimeout(() => {
                     shakeItems.forEach(item => {
-                        item.style.transitionDelay = ''; // Clear delay after animation
+                        item.style.transitionDelay = '';
                     });
-                    isShaken = false; // Allow shaking again
+                    isShaken = false;
                 }, totalAnimationTime);
             }
 
@@ -632,10 +727,8 @@
                     .catch(console.error);
             }
 
-            // Attempt to get permission on first user interaction
             document.body.addEventListener('click', requestMotionPermission, { once: true });
             
-            // For non-iOS devices that don't need explicit permission
             if (window.DeviceMotionEvent && typeof DeviceMotionEvent.requestPermission !== 'function') {
                 window.addEventListener('devicemotion', handleMotionEvent);
             }
@@ -644,4 +737,5 @@
     </script>
 </body>
 </html>
+
 
