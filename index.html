@@ -19,6 +19,10 @@
             overflow-x: hidden; /* Prevent horizontal scroll */
         }
         
+        section {
+            scroll-margin-top: 5rem; /* Offset for fixed navbar */
+        }
+        
         /* Full Page Parallax Background Effect */
         body::before {
             content: '';
@@ -27,7 +31,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background-image: url('https://images.unsplash.com/photo-1534796636912-3b95-b3ab5986?q=80&w=2071&auto=format&fit=crop');
+            background-image: url('https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?q=80&w=2071&auto=format&fit=crop');
             background-size: cover;
             background-position: center;
             background-attachment: fixed; /* This creates the parallax effect */
@@ -44,6 +48,12 @@
         .card-row {
             scrollbar-width: none;
             -ms-overflow-style: none;
+            padding: 0 1rem; /* Padding for mobile */
+        }
+        @media (min-width: 768px) {
+            .card-row {
+                padding: 0; /* Desktop relies on main container padding */
+            }
         }
         .card-row::-webkit-scrollbar {
             display: none;
@@ -51,13 +61,18 @@
         
         /* 3D Tilt Effect on Cards with Enhanced Glow */
         .card {
-            transition: transform 0.2s ease-out, box-shadow 0.3s ease;
+            transition: transform 0.2s ease-out, box-shadow 0.3s ease, border-color 0.3s ease;
             cursor: pointer;
             flex-shrink: 0;
             transform-style: preserve-3d;
+            border: 3px solid transparent; /* Thicker transparent border */
         }
         .card:hover {
             box-shadow: 0 15px 30px rgba(0,0,0,0.7), 0 0 30px 4px rgba(229, 9, 20, 0.6);
+        }
+        .card.active {
+            border-color: #E50914; /* Bright red border when active */
+            box-shadow: 0 0 30px 4px rgba(229, 9, 20, 0.6);
         }
         
         .modal {
@@ -124,6 +139,13 @@
                 display: none; /* Hide nav links, could be replaced with hamburger */
             }
         }
+        
+        /* Refined Logo Style */
+        .logo-text {
+            background: linear-gradient(to right, #E50914, #f03e3e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
 
     </style>
 </head>
@@ -131,7 +153,7 @@
 
     <!-- Top Navigation -->
     <nav id="top-nav" class="fixed top-0 left-0 right-0 z-40 p-4 md:px-12 flex justify-between items-center top-nav">
-        <a href="#" class="text-2xl font-bold text-red-600">RA</a>
+        <a href="#" class="text-2xl font-bold"><span class="logo-text">RA</span></a>
         <div class="nav-links hidden md:flex items-center space-x-6 text-sm">
             <a href="#" class="hover:text-gray-300">Home</a>
             <a href="#experience" class="hover:text-gray-300">Experience</a>
@@ -161,8 +183,8 @@
         <!-- Professional Experience Section -->
         <section id="experience" class="reveal">
             <h3 class="category-title text-2xl font-bold mb-4">PROFESSIONAL EXPERIENCE</h3>
-            <div class="card-row-container">
-                <div class="flex space-x-4 overflow-x-auto pb-4 card-row">
+            <div class="card-row-container -mx-4 md:-mx-12">
+                <div class="flex space-x-4 overflow-x-auto pb-4 card-row px-4 md:px-12">
                     <div class="card w-72 bg-[#282828] rounded-lg overflow-hidden" data-title="Credit Risk Modelling Intern" data-description="Developed ML models for credit risk at the Central Bank of India, integrating banking domain knowledge (NPA, DPD) with advanced feature engineering. Implemented end-to-end workflows and integrated Basel III and PAR metrics to ensure regulatory compliance." data-image="https://images.unsplash.com/photo-1579532582937-16c108930bf6?q=80&w=1974&auto=format&fit=crop">
                         <img src="https://images.unsplash.com/photo-1579532582937-16c108930bf6?q=80&w=1974&auto=format&fit=crop" alt="Financial Institution Building" class="w-full h-40 object-cover">
                         <div class="card-content p-4"><h4 class="font-bold text-lg">Central Bank of India</h4></div>
@@ -182,8 +204,8 @@
         <!-- Projects Section -->
         <section id="projects" class="reveal">
             <h3 class="category-title text-2xl font-bold mb-4">FEATURED PROJECTS</h3>
-            <div class="card-row-container">
-                <div class="flex space-x-4 overflow-x-auto pb-4 card-row">
+            <div class="card-row-container -mx-4 md:-mx-12">
+                <div class="flex space-x-4 overflow-x-auto pb-4 card-row px-4 md:px-12">
                      <div class="card w-72 bg-[#282828] rounded-lg overflow-hidden" data-title="Farmer Income Prediction" data-description="Developed a model integrating demographic, agronomic, climatic, and market data, achieving an R² of 0.7513 with an XGBoost+LightGBM ensemble." data-image="https://images.unsplash.com/photo-1560493676-04071c5f467b?q=80&w=1974&auto=format&fit=crop" data-link="https://rahularya014.github.io/Farmer-income-Demo/">
                         <img src="https://images.unsplash.com/photo-1560493676-04071c5f467b?q=80&w=1974&auto=format&fit=crop" alt="Farmer examining crops" class="w-full h-40 object-cover">
                         <div class="card-content p-4"><h4 class="font-bold text-lg">Farmer Income Prediction</h4></div>
@@ -211,8 +233,8 @@
          <!-- Education Section -->
         <section id="education" class="reveal">
             <h3 class="category-title text-2xl font-bold mb-4">EDUCATION</h3>
-            <div class="card-row-container">
-                <div class="flex space-x-4 overflow-x-auto pb-4 card-row">
+            <div class="card-row-container -mx-4 md:-mx-12">
+                <div class="flex space-x-4 overflow-x-auto pb-4 card-row px-4 md:px-12">
                     <div class="card w-72 bg-[#282828] rounded-lg overflow-hidden" data-title="M.A. Economics" data-description="Currently pursuing a Master's degree in Economics from one of India's premier institutions, focusing on advanced economic theory, econometrics, and quantitative analysis." data-image="https://images.unsplash.com/photo-1606761568499-6d2451b23c66?q=80&w=1974&auto=format&fit=crop">
                         <img src="https://images.unsplash.com/photo-1606761568499-6d2451b23c66?q=80&w=1974&auto=format&fit=crop" alt="Delhi School of Economics Campus" class="w-full h-40 object-cover">
                         <div class="card-content p-4"><h4 class="font-bold text-lg">Delhi School of Economics</h4></div>
@@ -362,9 +384,15 @@
             const projectCards = document.querySelectorAll('.card');
             const projectModal = document.getElementById('project-modal');
             const closeModalBtn = document.getElementById('close-project-modal');
+            let activeCard = null; // Keep track of the active card
             
             projectCards.forEach(card => {
                 card.addEventListener('click', () => {
+                    // Remove active class from previous card
+                    if(activeCard) {
+                        activeCard.classList.remove('active');
+                    }
+                    
                     const title = card.dataset.title;
                     const description = card.dataset.description;
                     const image = card.dataset.image;
@@ -381,6 +409,10 @@
                     } else {
                        modalLink.style.display = 'none';
                     }
+                    
+                    // Add active class to current card
+                    card.classList.add('active');
+                    activeCard = card;
 
                     projectModal.classList.remove('hidden');
                     setTimeout(() => projectModal.classList.remove('opacity-0'), 10);
@@ -389,6 +421,10 @@
 
             const closeProjectModal = () => {
                 projectModal.classList.add('opacity-0');
+                 if(activeCard) {
+                    activeCard.classList.remove('active');
+                    activeCard = null;
+                }
                 setTimeout(() => projectModal.classList.add('hidden'), 300);
             };
 
@@ -563,5 +599,4 @@
     </script>
 </body>
 </html>
-
 
