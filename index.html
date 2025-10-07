@@ -48,12 +48,6 @@
         .card-row {
             scrollbar-width: none;
             -ms-overflow-style: none;
-            padding: 0 1rem; /* Padding for mobile */
-        }
-        @media (min-width: 768px) {
-            .card-row {
-                padding: 0; /* Desktop relies on main container padding */
-            }
         }
         .card-row::-webkit-scrollbar {
             display: none;
@@ -61,24 +55,25 @@
         
         /* 3D Tilt Effect on Cards with Enhanced Glow */
         .card {
-            transition: transform 0.2s ease-out, box-shadow 0.3s ease, border-color 0.3s ease;
+            transition: transform 0.2s ease-out, box-shadow 0.3s ease;
             cursor: pointer;
             flex-shrink: 0;
             transform-style: preserve-3d;
-            border: 3px solid transparent; /* Thicker transparent border */
+            position: relative; /* Needed for AI icon positioning */
+            border-radius: 0.5rem; /* Ensure parent has border-radius */
         }
         .card:hover {
             box-shadow: 0 15px 30px rgba(0,0,0,0.7), 0 0 30px 4px rgba(229, 9, 20, 0.6);
         }
         .card.active {
-            border-color: #E50914; /* Bright red border when active */
-            box-shadow: 0 0 30px 4px rgba(229, 9, 20, 0.6);
+             /* CORRECTED BORDER: Use inset box-shadow */
+            box-shadow: inset 0 0 0 3px #E50914, 0 0 30px 4px rgba(229, 9, 20, 0.6);
         }
         
         .modal {
             transition: opacity 0.3s ease-in-out;
         }
-        .ai-chat-bubble {
+        .ai-chat-bubble, .ai-summary-content {
             animation: fadeIn 0.5s ease-in-out;
         }
         @keyframes fadeIn {
@@ -126,6 +121,9 @@
 
         /* Mobile Responsive Adjustments */
         @media (max-width: 768px) {
+            .card-row-container {
+                 padding: 0 1rem; /* Add padding on mobile */
+            }
             .card-row {
                 flex-direction: column;
                 align-items: center;
@@ -133,7 +131,7 @@
                 overflow-x: visible;
             }
             .card {
-                width: 90%;
+                width: 100%;
             }
             .nav-links {
                 display: none; /* Hide nav links, could be replaced with hamburger */
@@ -142,9 +140,38 @@
         
         /* Refined Logo Style */
         .logo-text {
-            background: linear-gradient(to right, #E50914, #f03e3e);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+           color: #E50914;
+        }
+
+        /* AI Summary Icon */
+        .ai-summary-icon {
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            z-index: 10;
+            background-color: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 9999px;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #E50914;
+            font-weight: bold;
+            font-size: 14px;
+            cursor: pointer;
+            opacity: 0; /* Initially hidden */
+            transition: all 0.3s ease;
+        }
+        .card:hover .ai-summary-icon {
+            opacity: 1; /* Appear on hover */
+        }
+        .ai-summary-icon:hover {
+            background-color: #E50914;
+            color: white;
+            transform: scale(1.1);
         }
 
     </style>
@@ -186,14 +213,17 @@
             <div class="card-row-container -mx-4 md:-mx-12">
                 <div class="flex space-x-4 overflow-x-auto pb-4 card-row px-4 md:px-12">
                     <div class="card w-72 bg-[#282828] rounded-lg overflow-hidden" data-title="Credit Risk Modelling Intern" data-description="Developed ML models for credit risk at the Central Bank of India, integrating banking domain knowledge (NPA, DPD) with advanced feature engineering. Implemented end-to-end workflows and integrated Basel III and PAR metrics to ensure regulatory compliance." data-image="https://images.unsplash.com/photo-1579532582937-16c108930bf6?q=80&w=1974&auto=format&fit=crop">
+                        <div class="ai-summary-icon">AI</div>
                         <img src="https://images.unsplash.com/photo-1579532582937-16c108930bf6?q=80&w=1974&auto=format&fit=crop" alt="Financial Institution Building" class="w-full h-40 object-cover">
                         <div class="card-content p-4"><h4 class="font-bold text-lg">Central Bank of India</h4></div>
                     </div>
                     <div class="card w-72 bg-[#282828] rounded-lg overflow-hidden" data-title="Product Manager Intern" data-description="Led initiatives boosting user engagement by 18% at Beyondriffs. Refined project roadmaps, fostered team collaboration, and spearheaded market research with over 250 users to drive data-informed product decisions." data-image="https://images.unsplash.com/photo-1556761175-b413da4baf72?q=80&w=1974&auto=format&fit=crop">
+                        <div class="ai-summary-icon">AI</div>
                         <img src="https://images.unsplash.com/photo-1556761175-b413da4baf72?q=80&w=1974&auto=format&fit=crop" alt="Tech Company" class="w-full h-40 object-cover">
                         <div class="card-content p-4"><h4 class="font-bold text-lg">Beyondriffs (Product)</h4></div>
                     </div>
                     <div class="card w-72 bg-[#282828] rounded-lg overflow-hidden" data-title="Marketing Intern" data-description="Utilized insights from over 100 surveys to develop customer-centric marketing strategies at Beyondriffs. Built compelling product narratives and value propositions to support sales and marketing campaigns." data-image="https://images.unsplash.com/photo-1557804506-669a67965ba0?q=80&w=1974&auto=format&fit=crop">
+                        <div class="ai-summary-icon">AI</div>
                         <img src="https://images.unsplash.com/photo-1557804506-669a67965ba0?q=80&w=1974&auto=format&fit=crop" alt="Marketing Strategy" class="w-full h-40 object-cover">
                         <div class="card-content p-4"><h4 class="font-bold text-lg">Beyondriffs (Marketing)</h4></div>
                     </div>
@@ -207,22 +237,27 @@
             <div class="card-row-container -mx-4 md:-mx-12">
                 <div class="flex space-x-4 overflow-x-auto pb-4 card-row px-4 md:px-12">
                      <div class="card w-72 bg-[#282828] rounded-lg overflow-hidden" data-title="Farmer Income Prediction" data-description="Developed a model integrating demographic, agronomic, climatic, and market data, achieving an R² of 0.7513 with an XGBoost+LightGBM ensemble." data-image="https://images.unsplash.com/photo-1560493676-04071c5f467b?q=80&w=1974&auto=format&fit=crop" data-link="https://rahularya014.github.io/Farmer-income-Demo/">
+                        <div class="ai-summary-icon">AI</div>
                         <img src="https://images.unsplash.com/photo-1560493676-04071c5f467b?q=80&w=1974&auto=format&fit=crop" alt="Farmer examining crops" class="w-full h-40 object-cover">
                         <div class="card-content p-4"><h4 class="font-bold text-lg">Farmer Income Prediction</h4></div>
                     </div>
                     <div class="card w-72 bg-[#282828] rounded-lg overflow-hidden" data-title="AMEX Offer Engagement Forecasting" data-description="Achieved AIR 422 in the AMEX Campus Challenge. Engineered 400+ features and built an optimized XGB+LGBM model (AUC 0.82, 78% precision). Designed Click Momentum and adaptive time-decay features, boosting performance by 15%." data-image="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2070&auto=format&fit=crop" data-link="https://rahularya014.github.io/Predictive-Modeling-for-Customer-Engagement-with-Offers-using-AMEX-Data-/">
+                        <div class="ai-summary-icon">AI</div>
                         <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2070&auto=format&fit=crop" alt="Data Science Analyst Dashboard" class="w-full h-40 object-cover">
                         <div class="card-content p-4"><h4 class="font-bold text-lg">AMEX Offer Engagement</h4></div>
                     </div>
                      <div class="card w-72 bg-[#282828] rounded-lg overflow-hidden" data-title="Credit Card Fraud Detection" data-description="Designed a Keras autoencoder on over 227K transactions, achieving a ROC-AUC of 0.95 for anomaly detection. Also built a Sklearn pipeline with 93.4% test accuracy." data-image="https://images.unsplash.com/photo-1563013544-824ae1b704d3?q=80&w=2070&auto=format&fit=crop" data-link="#">
+                        <div class="ai-summary-icon">AI</div>
                         <img src="https://images.unsplash.com/photo-1563013544-824ae1b704d3?q=80&w=2070&auto=format&fit=crop" alt="Credit Card Fraud Detection" class="w-full h-40 object-cover">
                         <div class="card-content p-4"><h4 class="font-bold text-lg">Credit Card Fraud Detection</h4></div>
                     </div>
                      <div class="card w-72 bg-[#282828] rounded-lg overflow-hidden" data-title="AI-Powered Supply Chain Analytics" data-description="Automated a full ETL pipeline using N8N. Leveraged Quadratic AI for prompt-based KPI computation, auto-generating SQL logic and visual insights to accelerate decision-making." data-image="https://images.unsplash.com/photo-1578575437130-527eed3abbec?q=80&w=2070&auto=format&fit=crop" data-link="#">
+                        <div class="ai-summary-icon">AI</div>
                         <img src="https://images.unsplash.com/photo-1578575437130-527eed3abbec?q=80&w=2070&auto=format&fit=crop" alt="Supply Chain Logistics" class="w-full h-40 object-cover">
                         <div class="card-content p-4"><h4 class="font-bold text-lg">AI Supply Chain Analytics</h4></div>
                     </div>
                      <div class="card w-72 bg-[#282828] rounded-lg overflow-hidden" data-title="Impact of COVID-19 on Indian Economy" data-description="Analyzed secondary data on COVID-19's economic impact, noting a 23.9% GDP drop in Q1 2020-21 and a significant 37% export decline." data-image="https://images.unsplash.com/photo-1584036561566-baf8f5f1b144?q=80&w=2070&auto=format&fit=crop" data-link="#">
+                        <div class="ai-summary-icon">AI</div>
                         <img src="https://images.unsplash.com/photo-1584036561566-baf8f5f1b144?q=80&w=2070&auto=format&fit=crop" alt="Stock market graph during pandemic" class="w-full h-40 object-cover">
                         <div class="card-content p-4"><h4 class="font-bold text-lg">COVID-19 Economic Impact</h4></div>
                     </div>
@@ -236,10 +271,12 @@
             <div class="card-row-container -mx-4 md:-mx-12">
                 <div class="flex space-x-4 overflow-x-auto pb-4 card-row px-4 md:px-12">
                     <div class="card w-72 bg-[#282828] rounded-lg overflow-hidden" data-title="M.A. Economics" data-description="Currently pursuing a Master's degree in Economics from one of India's premier institutions, focusing on advanced economic theory, econometrics, and quantitative analysis." data-image="https://images.unsplash.com/photo-1606761568499-6d2451b23c66?q=80&w=1974&auto=format&fit=crop">
+                        <div class="ai-summary-icon">AI</div>
                         <img src="https://images.unsplash.com/photo-1606761568499-6d2451b23c66?q=80&w=1974&auto=format&fit=crop" alt="Delhi School of Economics Campus" class="w-full h-40 object-cover">
                         <div class="card-content p-4"><h4 class="font-bold text-lg">Delhi School of Economics</h4></div>
                     </div>
                      <div class="card w-72 bg-[#282828] rounded-lg overflow-hidden" data-title="B.A. (H) Economics" data-description="Graduated with a Bachelor's degree in Economics, building a strong foundation in microeconomics, macroeconomics, statistics, and mathematical methods for economics." data-image="https://images.unsplash.com/photo-1562774053-701939374585?q=80&w=2086&auto=format&fit=crop">
+                        <div class="ai-summary-icon">AI</div>
                         <img src="https://images.unsplash.com/photo-1562774053-701939374585?q=80&w=2086&auto=format&fit=crop" alt="University College" class="w-full h-40 object-cover">
                         <div class="card-content p-4"><h4 class="font-bold text-lg">University of Delhi</h4></div>
                     </div>
@@ -317,6 +354,20 @@
             </div>
         </div>
     </div>
+    
+    <!-- AI Summary Modal -->
+    <div id="ai-summary-modal" class="modal fixed inset-0 bg-black bg-opacity-70 z-50 flex items-center justify-center p-4 hidden opacity-0">
+        <div class="bg-[#181818] rounded-lg max-w-lg w-full">
+            <div class="p-4 border-b border-gray-700 flex justify-between items-center">
+                <h3 id="ai-summary-title" class="text-xl font-bold text-red-500">AI Summary</h3>
+                <button id="close-ai-summary-modal" class="text-white text-2xl">&times;</button>
+            </div>
+            <div id="ai-summary-content" class="p-6 text-gray-300">
+                <!-- AI content will be injected here -->
+            </div>
+        </div>
+    </div>
+
 
     <!-- AI Assistant Modal -->
     <div id="ai-modal" class="modal fixed inset-0 bg-black bg-opacity-70 z-50 flex items-center justify-center p-4 hidden opacity-0">
@@ -362,7 +413,7 @@
                 });
             }
             
-            // Re-added 3D Card Tilt Effect
+            // 3D Card Tilt Effect
             const cards = document.querySelectorAll('.card');
             cards.forEach(card => {
                 card.addEventListener('mousemove', (e) => {
@@ -380,37 +431,33 @@
                 });
             });
 
-
-            const projectCards = document.querySelectorAll('.card');
+            // --- Modal Logic ---
             const projectModal = document.getElementById('project-modal');
             const closeModalBtn = document.getElementById('close-project-modal');
-            let activeCard = null; // Keep track of the active card
+            const aiSummaryModal = document.getElementById('ai-summary-modal');
+            const closeAiSummaryModalBtn = document.getElementById('close-ai-summary-modal');
+            let activeCard = null;
             
-            projectCards.forEach(card => {
-                card.addEventListener('click', () => {
-                    // Remove active class from previous card
-                    if(activeCard) {
-                        activeCard.classList.remove('active');
-                    }
+            // --- Project/Experience Detail Modal ---
+            document.querySelectorAll('.card').forEach(card => {
+                // Main card click (not the AI icon)
+                card.addEventListener('click', (e) => {
+                    if (e.target.closest('.ai-summary-icon')) return; // Ignore clicks on the AI icon
                     
-                    const title = card.dataset.title;
-                    const description = card.dataset.description;
-                    const image = card.dataset.image;
-                    const link = card.dataset.link;
-
-                    document.getElementById('modal-title').textContent = title;
-                    document.getElementById('modal-description').textContent = description;
-                    document.getElementById('modal-image').src = image;
+                    if(activeCard) activeCard.classList.remove('active');
+                    
+                    document.getElementById('modal-title').textContent = card.dataset.title;
+                    document.getElementById('modal-description').textContent = card.dataset.description;
+                    document.getElementById('modal-image').src = card.dataset.image;
                     const modalLink = document.getElementById('modal-link');
                     
-                    if (link && link !== '#') {
-                       modalLink.href = link;
+                    if (card.dataset.link && card.dataset.link !== '#') {
+                       modalLink.href = card.dataset.link;
                        modalLink.style.display = 'inline-block';
                     } else {
                        modalLink.style.display = 'none';
                     }
                     
-                    // Add active class to current card
                     card.classList.add('active');
                     activeCard = card;
 
@@ -421,30 +468,72 @@
 
             const closeProjectModal = () => {
                 projectModal.classList.add('opacity-0');
-                 if(activeCard) {
-                    activeCard.classList.remove('active');
-                    activeCard = null;
-                }
+                if(activeCard) activeCard.classList.remove('active');
+                activeCard = null;
                 setTimeout(() => projectModal.classList.add('hidden'), 300);
             };
 
             closeModalBtn.addEventListener('click', closeProjectModal);
             projectModal.addEventListener('click', (e) => {
-                if (e.target === projectModal) {
-                    closeProjectModal();
-                }
+                if (e.target === projectModal) closeProjectModal();
             });
 
-            // AI Assistant Modal Logic
+
+            // --- AI Summary Modal ---
+            const apiKey = 'AIzaSyApKgS7FuiwUB2GDTEU8nKDj0Pv9fWS3a0';
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+            const aiSummaryContent = document.getElementById('ai-summary-content');
+            const aiSummaryTitle = document.getElementById('ai-summary-title');
+
+            document.querySelectorAll('.ai-summary-icon').forEach(icon => {
+                icon.addEventListener('click', async (e) => {
+                    e.stopPropagation(); // Prevent main card click
+                    const card = icon.closest('.card');
+                    const title = card.dataset.title;
+                    const description = card.dataset.description;
+
+                    aiSummaryTitle.textContent = `AI Summary: ${title}`;
+                    aiSummaryContent.innerHTML = '<div class="loading-spinner mx-auto"></div>';
+                    aiSummaryModal.classList.remove('hidden');
+                    setTimeout(() => aiSummaryModal.classList.remove('opacity-0'), 10);
+                    
+                    try {
+                        const prompt = `Provide a concise, professional, one-paragraph summary of the following experience or project titled "${title}". Details: ${description}`;
+                        const payload = { contents: [{ parts: [{ text: prompt }] }] };
+                        const response = await fetch(apiUrl, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(payload)
+                        });
+                        if (!response.ok) throw new Error('API request failed');
+                        const result = await response.json();
+                        const summary = result.candidates[0].content.parts[0].text;
+                        aiSummaryContent.innerHTML = `<p>${summary}</p>`;
+                    } catch (error) {
+                        aiSummaryContent.innerHTML = `<p>Sorry, the summary could not be generated at this time.</p>`;
+                        console.error("AI Summary Error:", error);
+                    }
+                });
+            });
+
+            const closeAiSummaryModal = () => {
+                aiSummaryModal.classList.add('opacity-0');
+                setTimeout(() => aiSummaryModal.classList.add('hidden'), 300);
+            };
+
+            closeAiSummaryModalBtn.addEventListener('click', closeAiSummaryModal);
+            aiSummaryModal.addEventListener('click', (e) => {
+                if (e.target === aiSummaryModal) closeAiSummaryModal();
+            });
+
+
+            // --- Main AI Assistant Modal ---
             const aiModal = document.getElementById('ai-modal');
             const openAiModalBtn = document.getElementById('ai-assistant-btn');
             const closeAiModalBtn = document.getElementById('close-ai-modal');
             const aiSendBtn = document.getElementById('ai-send-btn');
             const aiInput = document.getElementById('ai-input');
             const aiChatBox = document.getElementById('ai-chat-box');
-            
-            const apiKey = 'AIzaSyApKgS7FuiwUB2GDTEU8nKDj0Pv9fWS3a0';
-            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
 
             const openAiModal = () => {
                 aiModal.classList.remove('hidden');
@@ -467,24 +556,20 @@
                 } else {
                     bubble.classList.add('bg-gray-700', 'self-start');
                 }
-                bubble.innerHTML = message; // Use innerHTML to render formatted response
+                bubble.innerHTML = message;
                 aiChatBox.appendChild(bubble);
                 aiChatBox.scrollTop = aiChatBox.scrollHeight;
             };
             
             function formatAIResponse(text) {
-                // Use a more robust markdown-to-HTML conversion
                 let html = text
-                    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') // Bold
-                    .replace(/^- (.*$)/gm, '<li>$1</li>'); // List items start
-
-                // Wrap consecutive list items in a <ul> tag
+                    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                    .replace(/^- (.*$)/gm, '<li>$1</li>');
                 if (html.includes('<li>')) {
                     html = '<ul>' + html.replace(/<\/li>\n<li>/g, '</li><li>') + '</ul>';
                     html = html.replace(/<\/li><ul>/g, '</li></ul><ul>').replace(/<\/ul><li>/g, '</ul><ul><li>');
                 }
-
-                return html.replace(/\n/g, '<br>'); // Handle paragraphs
+                return html.replace(/\n/g, '<br>');
             }
 
             const handleAIChat = async () => {
@@ -500,48 +585,15 @@
                         **Personal Information:**
                         Name: Rahul Arya
                         Email: rahularyajii2002@gmail.com
-                        Portfolio: https://rahularya014.github.io/rahularya014/
-
-                        **Education:**
-                        - M.A. Economics, Delhi School of Economics (2024-2026, Marks: 5.15/10)
-                        - B.A. (H) Economics, Satyawati College, University of Delhi (2023, Marks: 7.37/10)
-                        - Class XII (CBSE), Millia Convent English School, Purnia (2020, Marks: 80.20%)
-                        - Class X (CBSE), Millia Convent English School, Purnia (2018, Marks: 76.40%)
-
-                        **Academic Achievements:**
-                        - Secured AIR 66 in IIT Delhi M.Sc. Economics Entrance Exam (2024).
-                        - Received M.A. Economics admission offers from DTU, Madras School of Economics, GIPE, CDS, Ashoka University (2024).
-
-                        **Internships:**
-                        - Credit Risk Modelling Intern, Central Bank of India (2025): Developed expertise in credit risk modeling using ML, banking data (NPA, DPD), various statistical tests (ANOVA, Chi-square), and models like XGBoost & Random Forest. Evaluated models using precision, recall, F1, MAPE, and RMSE. Integrated Basel III and PAR metrics.
-                        - Product Manager & Marketing Intern, Beyondriffs (2024): Boosted user engagement by 18%, refined roadmaps, conducted extensive user research (250+ interactions, 100+ surveys), and created product narratives.
-
-                        **Academic Projects:**
-                        - Predicting Farmers’ Income in India (2025): Integrated demographic, climatic, and market data. Used Lasso feature selection and an XGBoost+LightGBM ensemble to achieve R² of 0.7513. Deployed a REST API.
-                        - Credit Card Fraud Detection (2025): Trained a Keras autoencoder on 227K+ transactions (ROC-AUC ≈ 0.95) and a Sklearn pipeline (93.4% test accuracy).
-                        - AI-Powered Supply Chain Analytics (2025): Built an automated ETL pipeline with N8N and Supabase. Used Quadratic AI for dynamic KPI computation.
-                        - Impact of COVID-19 on Indian Economy (2022): Analyzed a 23.9% GDP contraction and a 37% export decline in Q2 2020.
-
-                        **Positions of Responsibility:**
-                        - House Captain, Millia Convent English School (2018): Organized school events, demonstrated leadership and teamwork.
-
-                        **Extracurricular Activities:**
-                        - AMEX Campus Challenge (2025): Achieved AIR 422 with an Offer Engagement Forecasting Model (AUC 0.82). Engineered 400+ features.
-                        - Hackathon Participation (2025): Participated in national-level hackathons by Amex, L'Oréal, and TVS.
-                        - Coordinator, Optima Economics Society, Satyawati College (2023).
-
-                        **Skills:**
-                        - Technical: Python, Machine Learning (ML), MySQL, MS Excel, MS PowerPoint, Power BI.
-                        - Interpersonal: Teamwork, Quick Learner, Leadership, Adaptability, Avid Learner.
-
-                        **Certifications:**
-                        - Career Essentials in Data Analysis by Microsoft and LinkedIn.
-                        - Analyzing and Visualizing Data with Microsoft Power BI.
-                        - MySQL 5.6 Database Administrator.
-                        - Python for Beginners.
+                        **Education:** M.A. Economics from Delhi School of Economics (2024-2026); B.A. (H) Economics from University of Delhi (2023).
+                        **Achievements:** Secured AIR 66 in IIT Delhi M.Sc. Economics Entrance Exam (2024).
+                        **Internships:** Credit Risk Modelling at Central Bank of India (2025); Product Manager & Marketing at Beyondriffs (2024).
+                        **Projects:** Predicting Farmers’ Income, Credit Card Fraud Detection, AI-Powered Supply Chain Analytics, COVID-19 Economic Impact.
+                        **Skills:** Python, Machine Learning (ML), MySQL, Power BI, XGBoost, Keras, Leadership, Teamwork.
+                        **Certifications:** Data Analysis by Microsoft/LinkedIn, Power BI, MySQL, Python.
                     `;
 
-                    const systemPrompt = `You are Rahul Arya's personal AI assistant. Your goal is to answer questions based ONLY on the provided, detailed context from his CV. Be friendly, professional, and concise. Do not invent information. Explicitly ignore any phone number or physical address. If the answer is not in the context, say "I can only answer questions based on the information in Rahul's portfolio and CV." Context: ${portfolioContext}`;
+                    const systemPrompt = `You are Rahul Arya's personal AI assistant. Answer questions based ONLY on the provided context. Be professional and concise. Ignore personal contact details. If the answer isn't in the context, say so. Context: ${portfolioContext}`;
                     
                     const payload = {
                         contents: [{ parts: [{ text: userQuery }] }],
@@ -554,47 +606,33 @@
                         body: JSON.stringify(payload)
                     });
 
-                    if (!response.ok) {
-                        throw new Error(`API error: ${response.statusText}`);
-                    }
-
+                    if (!response.ok) throw new Error(`API error: ${response.statusText}`);
+                    
                     const result = await response.json();
                     const aiResponse = result.candidates[0].content.parts[0].text;
-                    
                     const loadingBubble = aiChatBox.querySelector('.loading-spinner').parentElement;
-                    loadingBubble.innerHTML = formatAIResponse(aiResponse); // Use the formatter here
+                    loadingBubble.innerHTML = formatAIResponse(aiResponse);
                     aiChatBox.scrollTop = aiChatBox.scrollHeight;
-
-
                 } catch (error) {
                     const loadingBubble = aiChatBox.querySelector('.loading-spinner').parentElement;
-                    loadingBubble.innerHTML = `<p>Sorry, I'm having trouble connecting right now. Please try again later.</p>`;
+                    loadingBubble.innerHTML = `<p>Sorry, I'm having trouble connecting right now.</p>`;
                     console.error('AI Chat Error:', error);
                 }
             };
 
             aiSendBtn.addEventListener('click', handleAIChat);
             aiInput.addEventListener('keydown', (e) => {
-                if (e.key === 'Enter') {
-                    handleAIChat();
-                }
+                if (e.key === 'Enter') handleAIChat();
             });
 
             // Scroll reveal animations
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
-                    }
+                    if (entry.isIntersecting) entry.target.classList.add('visible');
                 });
-            }, {
-                threshold: 0.1
-            });
+            }, { threshold: 0.1 });
 
-            document.querySelectorAll('.reveal').forEach(el => {
-                observer.observe(el);
-            });
-
+            document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
         });
     </script>
 </body>
