@@ -64,9 +64,6 @@
 
 ---
 
-
----
-
 ## 🧭 Quote
 
 <p align="center"><em>"Blending economics, data, and AI to guide better decisions."</em></p>
